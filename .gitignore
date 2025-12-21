@@ -23,6 +23,6 @@ coverage.xml
 .hypothesis
 
 # 项目特定
-logs/*.log
+logs/
 *.tmp
 data/
