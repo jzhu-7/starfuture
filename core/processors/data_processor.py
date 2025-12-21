@@ -5,6 +5,7 @@
 import os
 import json
 import requests
+import logging
 from datetime import datetime
 from typing import Dict, List, Optional, Tuple
 from bs4 import BeautifulSoup
@@ -13,6 +14,8 @@ from config import DATA_URL, HEADERS, TOTAL_FILE, AREAS_FILE
 from utils import fetch_html
 from scrapers.status_scraper import get_status_changes
 from models import SalesStats, StatusChange
+
+logger = logging.getLogger(__name__)
 
 def read_json_as_dict(json_file: str) -> Dict[str, Dict]:
     """以日期为key读取JSON"""
@@ -114,7 +117,6 @@ def process_status_changes(changes: List[StatusChange], house_area_map: Dict[str
             house_no = change.house_no
 
             area = house_area_map.get(building_name, {}).get(house_no, 0.0)
-            print(f"🏠 {building_name} {house_no}，面积：{area}")
 
             processed_changes.append({
                 "building_name": building_name,
@@ -132,14 +134,14 @@ def update_sales_data() -> bool:
 
         today = datetime.now().strftime("%Y-%m-%d")
 
-        print("🌐 请求页面...")
+        logger.info("🌐 请求页面...")
         resp = requests.get(DATA_URL, headers=HEADERS, timeout=15)
         resp.raise_for_status()
         resp.encoding = "utf-8"
 
         stats = parse_presale_contract_stats(resp.text)
         if not stats:
-            print("❌ 未获取期房签约统计")
+            logger.error("❌ 未获取期房签约统计")
             return False
 
         data_by_date = read_json_as_dict(TOTAL_FILE)
@@ -170,9 +172,9 @@ def update_sales_data() -> bool:
         # 重写JSON文件
         write_json(data_by_date, TOTAL_FILE)
 
-        print(f"\n✅ {today} 数据已写入（同日自动覆盖）")
+        logger.info(f"✅ {today} 数据已写入（同日自动覆盖）")
         return True
 
     except Exception as e:
-        print(f"❌ 数据更新失败: {e}")
+        logger.error(f"❌ 数据更新失败: {e}")
         return False

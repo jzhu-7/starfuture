@@ -6,6 +6,7 @@ import os
 import json
 import re
 import requests
+import logging
 from datetime import datetime
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -15,6 +16,8 @@ from bs4 import BeautifulSoup
 from config import HEADERS, SALES_DIR, COLOR_STATUS_MAP, MAX_WORKERS
 from utils import fetch_html, get_buildings_url
 from models import HouseData, BuildingData, StatusChange
+
+logger = logging.getLogger(__name__)
 
 def parse_status(style: str) -> str:
     """解析状态样式"""
@@ -33,20 +36,20 @@ def extract_building_name(soup) -> str:
 
 def process_building(bid: str, url: str) -> Optional[BuildingData]:
     """处理单个楼栋"""
-    print(f"\n处理楼栋 {bid}...")
+    logger.info(f"处理楼栋 {bid}...")
 
     try:
         resp = requests.get(url, headers=HEADERS, timeout=30)
         resp.raise_for_status()
         resp.encoding = "utf-8"
     except Exception as e:
-        print(f"  ❌ 请求失败：{e}")
+        logger.error(f"  ❌ 请求失败：{e}")
         return None
 
     soup = BeautifulSoup(resp.text, "html.parser")
     table = soup.find("table", id="table_Buileing")
     if not table:
-        print("  ❌ 未找到 table_Buileing")
+        logger.error("  ❌ 未找到 table_Buileing")
         return None
 
     rows = []
@@ -109,7 +112,7 @@ def save_status_data(data: Dict[str, BuildingData], date: str):
     with open(json_path, "w", encoding="utf-8") as f:
         json.dump(dict_data, f, ensure_ascii=False, indent=2)
 
-    print(f"\n📄 已生成：{json_path}")
+    logger.info(f"📄 已生成：{json_path}")
     return json_path
 
 def compare_status_changes(prev_file: str, curr_file: str) -> List[StatusChange]:
@@ -127,7 +130,7 @@ def compare_status_changes(prev_file: str, curr_file: str) -> List[StatusChange]
     # 比较每个楼栋
     for building_name in curr_data:
         if building_name not in prev_data:
-            print(f"跳过 {building_name}：前一天数据不存在")
+            logger.warning(f"跳过 {building_name}：前一天数据不存在")
             continue
 
         prev_building = prev_data[building_name]

@@ -5,6 +5,7 @@
 import json
 import re
 import requests
+import logging
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Dict, List, Optional, Tuple
 from bs4 import BeautifulSoup
@@ -13,6 +14,8 @@ from urllib.parse import urljoin
 from config import HEADERS, BASE_URL
 from utils import fetch_html, get_buildings_url, safe_delay
 from models import HouseData, BuildingData
+
+logger = logging.getLogger(__name__)
 
 def extract_house_links(html: str) -> List[Dict]:
     """提取房号链接"""
@@ -51,25 +54,25 @@ def extract_build_area(html: str) -> Optional[float]:
 
 def process_building_data(bid: str, url: str) -> Tuple[str, List[HouseData]]:
     """处理单个楼栋的房源信息"""
-    print(f"🌐 正在请求楼盘表页面{bid} :{url}...")
+    logger.info(f"🌐 正在请求楼盘表页面{bid} :{url}...")
     try:
         resp = requests.get(url, headers=HEADERS, timeout=10)
         resp.encoding = "utf-8"
 
         houses = extract_house_links(resp.text)
-        print(f"🏠 共找到 {len(houses)} 套房源")
+        logger.info(f"🏠 共找到 {len(houses)} 套房源")
 
         building_data = []
 
         for idx, h in enumerate(houses, 1):
-            print(f"[{idx}/{len(houses)}] 解析 {h['house_no']} ...")
+            logger.debug(f"[{idx}/{len(houses)}] 解析 {h['house_no']} ...")
             try:
                 r = requests.get(h["url"], headers=HEADERS, timeout=10)
                 r.encoding = "utf-8"
                 area = extract_build_area(r.text)
-                print(f"  建筑面积: {area} 平方米")
+                logger.debug(f"  建筑面积: {area} 平方米")
                 if area is None:
-                    print(f"❌ 未找到建筑面积")
+                    logger.warning(f"❌ 未找到建筑面积")
                     continue
 
                 building_data.append(HouseData(
@@ -79,11 +82,11 @@ def process_building_data(bid: str, url: str) -> Tuple[str, List[HouseData]]:
 
                 safe_delay()  # 防止请求过快
             except Exception as e:
-                print(f"❌ {h['house_no']} 解析失败：{e}")
+                logger.error(f"❌ {h['house_no']} 解析失败：{e}")
 
         return bid, building_data
     except Exception as e:
-        print(f"❌ 请求楼盘页面失败：{e}")
+        logger.error(f"❌ 请求楼盘页面失败：{e}")
         return bid, []
 
 def scrape_areas_data(output_file: str = "data/areas/areas.json") -> Dict[str, BuildingData]:
@@ -115,5 +118,5 @@ def scrape_areas_data(output_file: str = "data/areas/areas.json") -> Dict[str, B
             }
         json.dump(dict_data, f, ensure_ascii=False, indent=4)
 
-    print(f"✅ 已导出数据到 {output_file}")
+    logger.info(f"✅ 已导出数据到 {output_file}")
     return data
