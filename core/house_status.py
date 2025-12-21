@@ -10,54 +10,57 @@ from urllib.parse import urljoin
 import concurrent.futures
 import json
 
-# 自动识别最新的两个日期文件夹
-def get_latest_dirs():
-    dirs = [d for d in os.listdir('.') if os.path.isdir(d) and re.match(r'\d{4}-\d{2}-\d{2}', d)]
-    dirs.sort()
-    if len(dirs) < 2:
-        raise ValueError("至少需要两个日期文件夹")
-    return dirs[-2], dirs[-1]
+# 自动识别最新的两个JSON文件
+def get_latest_json_files():
+    sales_dir = "data/sales"
+    if not os.path.exists(sales_dir):
+        raise ValueError("data/sales 目录不存在")
+    files = [f for f in os.listdir(sales_dir) if f.endswith('.json') and re.match(r'\d{4}-\d{2}-\d{2}\.json', f)]
+    files.sort()
+    if len(files) < 2:
+        raise ValueError("至少需要两个JSON文件")
+    return os.path.join(sales_dir, files[-2]), os.path.join(sales_dir, files[-1])
 
 # 配置路径
 
 def compare_status_changes():
-    PREV_DIR, CURR_DIR = get_latest_dirs()
+    prev_file, curr_file = get_latest_json_files()
 
     changes = []
 
-    # 遍历当前目录的CSV文件（排除汇总文件）
-    for file in os.listdir(CURR_DIR):
-        if not file.endswith('.csv') or '汇总' in file:
+    # 读取前一天数据
+    with open(prev_file, 'r', encoding='utf-8') as f:
+        prev_data = json.load(f)
+
+    # 读取当天数据
+    with open(curr_file, 'r', encoding='utf-8') as f:
+        curr_data = json.load(f)
+
+    # 比较每个楼栋
+    for building_name in curr_data:
+        if building_name not in prev_data:
+            print(f"跳过 {building_name}：前一天数据不存在")
             continue
 
-        curr_path = os.path.join(CURR_DIR, file)
-        prev_path = os.path.join(PREV_DIR, file)
+        prev_building = prev_data[building_name]
+        curr_building = curr_data[building_name]
 
-        if not os.path.exists(prev_path):
-            print(f"跳过 {file}：前一天文件不存在")
-            continue
+        prev_houses = {h['house_no']: h['status'] for h in prev_building['house_data']}
+        curr_houses = curr_building['house_data']
 
-        # 读取前一天数据
-        prev_data = {}
-        with open(prev_path, newline='', encoding='utf-8-sig') as f:
-            for row in csv.DictReader(f):
-                prev_data[row['house_no']] = row['status']
+        for house in curr_houses:
+            house_no = house['house_no']
+            curr_status = house['status']
+            prev_status = prev_houses.get(house_no, '不存在')
 
-        # 读取当天数据并比较
-        with open(curr_path, newline='', encoding='utf-8-sig') as f:
-            for row in csv.DictReader(f):
-                house_no = row['house_no']
-                curr_status = row['status']
-                prev_status = prev_data.get(house_no, '不存在')
-
-                if curr_status != prev_status:
-                    changes.append({
-                        'building': file.replace('.csv', ''),
-                        'house_no': house_no,
-                        'prev_status': prev_status,
-                        'curr_status': curr_status
-                    })
-    # print(changes)
+            if curr_status != prev_status:
+                changes.append({
+                    'building_name': building_name,
+                    'house_no': house_no,
+                    'prev_status': prev_status,
+                    'curr_status': curr_status
+                })
+    print(changes)
     return changes
 
 # ==================================================
@@ -215,7 +218,7 @@ def get_status_changes():
             all_buildings_data[building_data["building_name"]] = building_data
 
     # 保存数据到 JSON 文件
-    json_path = os.path.join("data", f"{today}.json")
+    json_path = os.path.join("data","sales", f"{today}.json")
     with open(json_path, "w", encoding="utf-8") as f:
         json.dump(all_buildings_data, f, ensure_ascii=False, indent=2)
 

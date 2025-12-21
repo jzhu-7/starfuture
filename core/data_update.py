@@ -6,9 +6,10 @@ from datetime import datetime
 from typing import Dict, Optional
 from house_status import get_status_changes
 import re
+import json
 
 URL = "http://bjjs.zjw.beijing.gov.cn/eportal/ui?pageId=320794&projectID=8017587&systemID=2&srcId=1"
-CSV_FILE = "presale_stats.csv"
+JSON_FILE = "data/total.json"
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0"
@@ -18,15 +19,25 @@ HEADERS = {
 # 工具函数
 # ==================================================
 
-def read_csv_as_dict(csv_file: str) -> Dict[str, Dict]:
+def read_json_as_dict(json_file: str) -> Dict[str, Dict]:
     """
-    以 日期 为 key 读取 CSV
+    以 日期 为 key 读取 JSON
     """
-    if not os.path.exists(csv_file):
+    if not os.path.exists(json_file):
         return {}
 
-    with open(csv_file, newline="", encoding="utf-8-sig") as f:
-        return {row["日期"]: row for row in csv.DictReader(f)}
+    with open(json_file, "r", encoding="utf-8") as f:
+        data = json.load(f)
+        return {item["日期"]: item for item in data}
+
+
+def write_json(data_by_date: Dict[str, Dict], json_file: str):
+    """
+    写入 JSON 文件
+    """
+    data_list = [data_by_date[d] for d in sorted(data_by_date.keys())]
+    with open(json_file, "w", encoding="utf-8") as f:
+        json.dump(data_list, f, ensure_ascii=False, indent=4)
 
 
 def find_base_record(data_by_date: Dict[str, Dict], today: str) -> Optional[Dict]:
@@ -82,6 +93,14 @@ def parse_presale_contract_stats(html: str) -> Optional[Dict]:
 # ==================================================
 
 def main():
+    with open("data/areas/areas.json", 'r', encoding='utf-8') as f:
+        areas_data = json.load(f)
+
+    # 构建房源面积映射
+    house_area_map = {}
+    for building, bdata in areas_data.items():
+        house_area_map[building] = {h["house_no"]: h["area"] for h in bdata["house_data"]}
+
     today = datetime.now().strftime("%Y-%m-%d")
 
     print("🌐 请求页面...")
@@ -94,7 +113,7 @@ def main():
         print("❌ 未获取期房签约统计")
         return
 
-    data_by_date = read_csv_as_dict(CSV_FILE)
+    data_by_date = read_json_as_dict(JSON_FILE)
     base_record = find_base_record(data_by_date, today)
 
     # ===== 累计数据 =====
@@ -130,78 +149,40 @@ def main():
         "已签约套数": stats["已签约套数"],
         "已签约面积(M2)": round(cur_area, 2),
         "成交均价(￥/M2)": round(cur_price, 2),
-        "成交户号": "",  # 初始化为空字符串
+        "成交户号": [],  # 初始化为空列表
         "面积(M2)": delta_area if delta_area > 0 else "",
         "总价(￥)": delta_total,
         "均价(￥/M2)": delta_unit,
     }
 
-    # ===== 重写 CSV =====
-    with open(CSV_FILE, "w", newline="", encoding="utf-8-sig") as f:
-        writer = csv.DictWriter(
-            f,
-            fieldnames=[
-                "日期",
-                "已签约套数",
-                "已签约面积(M2)",
-                "成交均价(￥/M2)",
-                "成交户号",
-                "面积(M2)",
-                "总价(￥)",
-                "均价(￥/M2)",
-            ],
-        )
-        writer.writeheader()
-        for d in sorted(data_by_date.keys()):
-            writer.writerow(data_by_date[d])
+    # ===== 重写 JSON =====
+    write_json(data_by_date, JSON_FILE)
 
     print(f"\n✅ {today} 数据已写入（同日自动覆盖）")
 
     # 如果有新数据，调用房屋状态更新程序
     if delta_area > 0:
         changes = get_status_changes()
+        print(changes)
         if changes:
-            # 确保字段存在
-            data_by_date[today].setdefault("成交户号", "")
-
+            data_by_date[today].setdefault("成交户号", [])
             for change in changes:
                 if change["prev_status"] == "可售":
-                    # 1️⃣ 提取楼栋号：如 5-14#住宅楼 → 14#
-                    building_raw = change["building"].strip()
-                    m = re.search(r"(\d+#)", building_raw)
-                    building_no = m.group(1) if m else building_raw
+                    building_name = change["building_name"]
+                    house_no = change["house_no"]
 
-                    # 2️⃣ 处理房号：1单元-701 → 1-701
-                    house_raw = change["house_no"].strip()
-                    house_no = house_raw.replace("单元-", "-")
+                    area = house_area_map.get(building_name, {}).get(house_no, 0.0)
+                    print(f"🏠 {building_name} {house_no}，面积：{area}")
 
-                    # 3️⃣ 拼接成目标格式：14#1-701
-                    formatted = f"{building_no}{house_no}"
+                    data_by_date[today]["成交户号"].append({
+                        "building_name": building_name,
+                        "house_no": house_no,
+                        "area": area
+                    })
 
-                    # 4️⃣ 存储成字符串，多个户号用逗号分隔，不加引号
-                    if data_by_date[today]["成交户号"]:
-                        data_by_date[today]["成交户号"] += f", {formatted}"
-                    else:
-                        data_by_date[today]["成交户号"] = formatted
 
-            # 重新写入 CSV
-            with open(CSV_FILE, "w", newline="", encoding="utf-8-sig") as f:
-                writer = csv.DictWriter(
-                    f,
-                    fieldnames=[
-                        "日期",
-                        "已签约套数",
-                        "已签约面积(M2)",
-                        "成交均价(￥/M2)",
-                        "成交户号",
-                        "面积(M2)",
-                        "总价(￥)",
-                        "均价(￥/M2)",
-                    ],
-                )
-                writer.writeheader()
-                for d in sorted(data_by_date.keys()):
-                    writer.writerow(data_by_date[d])
+            # 重新写入 JSON
+            write_json(data_by_date, JSON_FILE)
 
 if __name__ == "__main__":
     main()
