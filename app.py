@@ -607,21 +607,72 @@ with col_detail:
 
 # 右侧：价格走势图表
 with col_chart:
+    # 按照当前图表显示的“起始坐标”（即每条曲线自身的最小值 - 小缓冲）作为基线，保持无控件、始终启用渐变，每条曲线单独一个面积
+    # 小工具：将 HEX 转为 RGB
+    def hex_to_rgb(h):
+        h = h.lstrip('#')
+        return tuple(int(h[i:i+2], 16) for i in (0, 2, 4))
+
+    # 小工具：在给定基线下构造平滑渐变（通过较多层的细微 alpha 插值近似线性渐变）
+    # 说明：Plotly 原生不支持直接对单个 fill 使用线性渐变，因此使用多层细分近似，视觉上更接近连续渐变且无明显带状分层感
+    def add_gradient_fill_between_baseline(fig, x, y, hex_color, baseline, legendgroup=None, n_layers=40, alpha_min=0.005, alpha_max=0.26):
+        r, g, b = hex_to_rgb(hex_color)
+        # 添加基线 trace（透明，不显示在图例），同时设置 legendgroup 以便与线条联动
+        fig.add_trace(go.Scatter(
+            x=x, y=[baseline] * len(x),
+            mode='lines', line=dict(width=0), showlegend=False, hoverinfo='skip', legendgroup=legendgroup
+        ))
+        # 使用 n_layers 层平滑插值，alpha 从 alpha_min 线性增长到 alpha_max
+        if n_layers < 2:
+            n_layers = 2
+        for i in range(n_layers):
+            frac = (i + 1) / float(n_layers)
+            alpha = float(alpha_min + (alpha_max - alpha_min) * (i / float(n_layers - 1)))
+            y_frac = baseline + (y - baseline) * frac
+            fig.add_trace(go.Scatter(
+                x=x, y=y_frac,
+                mode='lines', line=dict(width=0), fill='tonexty',
+                fillcolor=f'rgba({r},{g},{b},{alpha})', hoverinfo='skip', showlegend=False, legendgroup=legendgroup
+            ))
+
+    # 构建图表（我们先为每条曲线添加渐变填充，再添加对应的线条，保证线条在最上层）
     fig = go.Figure()
 
-    # 累计均价线 - 青蓝色
+    x = df_all['日期']
+    y_primary = df_all['成交均价(￥/M2)']
+    y_secondary = df_all['均价(￥/M2)']
+
+    # 使用全局基线：取两条曲线的最小值并减去 5% 缓冲，保证两条曲线的面积都从相同的“图表底部”开始
+    combined_min = pd.concat([y_primary.dropna(), y_secondary.dropna()]) if (not y_primary.dropna().empty or not y_secondary.dropna().empty) else pd.Series([])
+    if not combined_min.empty:
+        combined_min_val = float(combined_min.min())
+        combined_max_val = float(combined_min.max())
+        r = (combined_max_val - combined_min_val) if (combined_max_val - combined_min_val) != 0 else max(abs(combined_min_val) * 0.02, 1.0)
+        baseline_common = float(combined_min_val - r * 0.05)
+    else:
+        baseline_common = 0.0
+
+    # 为每条曲线添加渐变面积（各自独立地基于相同的 baseline），使用较低的 alpha 以保持数据可读性
+    if not y_primary.dropna().empty:
+        # 使用连续近似渐变：40 层默认，alpha 从 0.005 至 0.26
+        add_gradient_fill_between_baseline(fig, x, y_primary, COLOR_PRIMARY, baseline=baseline_common, legendgroup='累计均价', n_layers=40, alpha_min=0.005, alpha_max=0.26)
+    if not y_secondary.dropna().empty:
+        # 使用连续近似渐变：40 层默认，alpha 从 0.005 至 0.22
+        add_gradient_fill_between_baseline(fig, x, y_secondary, COLOR_SECONDARY, baseline=baseline_common, legendgroup='当日均价', n_layers=40, alpha_min=0.005, alpha_max=0.22)
+
+    # 累计均价线 - 青蓝色（置于渐变之上）
     fig.add_trace(go.Scatter(
-        x=df_all['日期'], y=df_all['成交均价(￥/M2)'],
-        mode='lines+markers', name='累计均价',
+        x=x, y=y_primary,
+        mode='lines+markers', name='累计均价', legendgroup='累计均价',
         line=dict(width=3, color=COLOR_PRIMARY, shape='spline'),
         marker=dict(size=6, color='white', line=dict(width=2, color=COLOR_PRIMARY)),
         hovertemplate="累计均价: ¥%{y:,.0f}<extra></extra>"
     ))
-    
-    # 当日均价线 - 橙黄色
+
+    # 当日均价线 - 橙黄色（置于渐变之上）
     fig.add_trace(go.Scatter(
-        x=df_all['日期'], y=df_all['均价(￥/M2)'],
-        mode='lines+markers', name='当日均价',
+        x=x, y=y_secondary,
+        mode='lines+markers', name='当日均价', legendgroup='当日均价',
         line=dict(width=3, color=COLOR_SECONDARY, shape='spline'),
         marker=dict(size=6, color='white', line=dict(width=2, color=COLOR_SECONDARY)),
         connectgaps=True,
@@ -631,19 +682,19 @@ with col_chart:
     # 选中日期的高亮圈
     fig.add_trace(go.Scatter(
         x=[selected_row['日期']], y=[selected_row['成交均价(￥/M2)']],
-        mode='markers', showlegend=False,
+        mode='markers', showlegend=False, legendgroup='累计均价',
         marker=dict(size=14, color=COLOR_PRIMARY, opacity=0.3, line=dict(width=2, color=COLOR_PRIMARY)),
         hoverinfo='skip'
     ))
 
     fig.add_trace(go.Scatter(
         x=[selected_row['日期']], y=[selected_row['均价(￥/M2)']],
-        mode='markers', showlegend=False,
+        mode='markers', showlegend=False, legendgroup='当日均价',
         marker=dict(size=14, color=COLOR_SECONDARY, opacity=0.3, line=dict(width=2, color=COLOR_SECONDARY)),
         hoverinfo='skip'
     ))
 
-    # 添加虚线
+    # 添加虚线（选中日期的垂直参考线）
     fig.add_trace(go.Scatter(
         x=[selected_row['日期'], selected_row['日期']], 
         y=[min(df_all['成交均价(￥/M2)'].min(), df_all['均价(￥/M2)'].min()), max(df_all['成交均价(￥/M2)'].max(), df_all['均价(￥/M2)'].max())], 
@@ -688,7 +739,7 @@ with col_chart:
     fig_html = fig.to_html(full_html=False, include_plotlyjs='cdn')
     # 包一层容器并加上小的 CSS reset，确保没有 body margin 导致溢出
     wrapped_fig = textwrap.dedent(f"""
-<style>html,body{{margin:0;padding:0;background:transparent;}}</style>
+<style>html,body{{margin:0;padding:0;background:transparent;}} .modebar, .plotly .modebar, .js-plotly-plot .modebar{{display:none !important;}} </style>
 <div style="background: white; border-radius: 14px; padding: 1rem; box-shadow: 0 8px 30px rgba(15,23,42,0.06); border: 1px solid transparent; margin-bottom: 1rem; height: 580px; box-sizing: border-box; position: relative; overflow: hidden;">
   <div style="position:absolute; top:0; left:0; width:100%; height:6px; background: linear-gradient(90deg, #f28e52 0%, #ffb380 100%); border-top-left-radius:14px; border-top-right-radius:14px;"></div>
   <div style="display:flex; align-items:center; height:56px; padding-left:6px;">
