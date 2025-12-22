@@ -11,9 +11,9 @@ from typing import Dict, List, Optional, Tuple
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 
-from config import HEADERS, BASE_URL
-from utils import fetch_html, get_buildings_url, safe_delay
-from models import HouseData, BuildingData
+from ..config import HEADERS, BASE_URL
+from ..utils import fetch_html, get_buildings_url, safe_delay
+from ..models import HouseData, BuildingData
 
 logger = logging.getLogger(__name__)
 

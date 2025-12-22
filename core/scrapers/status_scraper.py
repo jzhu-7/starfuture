@@ -13,9 +13,9 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Dict, List, Tuple, Optional
 from bs4 import BeautifulSoup
 
-from config import HEADERS, SALES_DIR, COLOR_STATUS_MAP, MAX_WORKERS
-from utils import fetch_html, get_buildings_url
-from models import HouseData, BuildingData, StatusChange
+from ..config import HEADERS, SALES_DIR, COLOR_STATUS_MAP, MAX_WORKERS
+from ..utils import fetch_html, get_buildings_url
+from ..models import HouseData, BuildingData, StatusChange
 
 logger = logging.getLogger(__name__)
 

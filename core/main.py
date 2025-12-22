@@ -3,7 +3,7 @@
 统一的数据更新入口
 """
 import logging
-from processors.data_processor import update_sales_data
+from .processors.data_processor import update_sales_data
 
 logger = logging.getLogger(__name__)
 
@@ -20,10 +20,7 @@ def update_areas():
     """更新面积数据"""
     logger.info("🚀 开始更新面积数据...")
     try:
-        import sys
-        import os
-        sys.path.insert(0, os.path.dirname(__file__))
-        from scrapers.area_scraper import scrape_areas_data
+        from .scrapers.area_scraper import scrape_areas_data
         scrape_areas_data()
         logger.info("✅ 面积数据更新完成")
     except Exception as e:

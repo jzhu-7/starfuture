@@ -8,7 +8,7 @@ from urllib.parse import urljoin
 import time
 import logging
 from typing import Dict, Optional
-from config import HEADERS, BASE_URL, TARGET_URL, REQUEST_TIMEOUT
+from ..config import HEADERS, BASE_URL, TARGET_URL, REQUEST_TIMEOUT
 
 logger = logging.getLogger(__name__)
 

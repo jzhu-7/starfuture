@@ -307,27 +307,28 @@ def load_all_data():
     except Exception as e:
         st.error(f"数据加载失败: {e}")
         return pd.DataFrame()
-
-def run_update_script():
-    """执行后端更新脚本"""
+    
+def run_update_script(timeout=300):
+    """执行后端更新脚本（使用相对路径 & 模块执行）"""
     try:
-        # 设置环境变量
         env = os.environ.copy()
-        base_path = '/home/zhujf/house' # 保持你的原始路径
+        base_path = os.path.dirname(os.path.abspath(__file__))  # 项目根
         env['PYTHONPATH'] = base_path
-        script_path = os.path.join(base_path, 'core/main.py')
 
         result = subprocess.run(
-            [sys.executable, script_path],
+            [sys.executable, '-u', '-m', 'core.main'],
             capture_output=True,
             text=True,
             env=env,
-            cwd=base_path
+            cwd=base_path,
+            timeout=timeout
         )
         return result
+    except subprocess.TimeoutExpired as e:
+        return f"脚本执行超时: {e}"
     except Exception as e:
         return str(e)
-
+    
 # ==========================================
 # 3. 侧边栏：控制区
 # ==========================================

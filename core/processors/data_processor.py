@@ -10,10 +10,10 @@ from datetime import datetime
 from typing import Dict, List, Optional, Tuple
 from bs4 import BeautifulSoup
 
-from config import DATA_URL, HEADERS, TOTAL_FILE, AREAS_FILE
-from utils import fetch_html
-from scrapers.status_scraper import get_status_changes
-from models import SalesStats, StatusChange
+from ..config import DATA_URL, HEADERS, TOTAL_FILE, AREAS_FILE
+from ..utils import fetch_html
+from ..scrapers.status_scraper import get_status_changes
+from ..models import SalesStats, StatusChange
 
 logger = logging.getLogger(__name__)
 
