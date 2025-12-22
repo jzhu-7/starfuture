@@ -32,18 +32,18 @@ def update_areas():
 def main():
     """主函数"""
     # 配置日志 - 同时输出到控制台和文件
-    import os
+    # import os
     # 获取项目根目录
-    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    log_file = os.path.join(project_root, 'logs', 'house_data.log')
-    os.makedirs(os.path.dirname(log_file), exist_ok=True)
+    # project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    # log_file = os.path.join(project_root, 'logs', 'house_data.log')
+    # os.makedirs(os.path.dirname(log_file), exist_ok=True)
     
     logging.basicConfig(
         level=logging.INFO,
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
         handlers=[
-            logging.StreamHandler(),  # 控制台输出
-            logging.FileHandler(log_file, encoding='utf-8')  # 文件输出
+            logging.StreamHandler()  # 控制台输出
+            # logging.FileHandler(log_file, encoding='utf-8')  # 文件输出
         ]
     )
     
