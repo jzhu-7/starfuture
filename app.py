@@ -1,382 +1,719 @@
-
 import streamlit as st
 import pandas as pd
-import plotly.express as px
 import plotly.graph_objects as go
 import os
+import json
+import sys
+import subprocess
+import html
+import textwrap
+import streamlit.components.v1 as components
 from datetime import datetime
 
-# 设置页面配置
+# ==========================================
+# 1. 页面配置与全局样式
+# ==========================================
 st.set_page_config(
-    page_title="🏠 销售数据大屏",
+    page_title="星耀未来销售数据",
     layout="wide",
-    page_icon="🏠",
     initial_sidebar_state="expanded"
 )
 
+COLOR_PRIMARY = "#007b8c"  # 累计/主色
+COLOR_SECONDARY = "#f28e52" # 当日/辅助色
+COLOR_BG = "#f8fafc"
+
 # 自定义CSS样式
+# ==========================================
+# 1. 页面配置与全局样式 (完整替换版)
+# ==========================================
 st.markdown("""
 <style>
-    /* 全局样式 */
-    .main {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
+    /* 1. 强制全局字体和背景 */
+    html, body, [data-testid="stAppViewContainer"] {
+        background-color: #f0f2f6 !important;
+        font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif !important;
     }
-    
-    /* 标题样式 */
-    .title {
-        font-size: 3rem;
-        font-weight: 700;
-        color: #ffffff;
+
+    /* 2. 侧边栏“更新数据”按钮专供样式 */
+    [data-testid="stSidebar"] .stButton:first-of-type button {
+        background: #007b8c !important;
+        color: white !important;
+        border: none !important;
+        padding: 0.75rem 1rem !important;
+        border-radius: 12px !important;
+        font-weight: 700 !important;
+        height: 3.5rem !important;
+        width: 100% !important;
+        box-shadow: 0 4px 12px rgba(0, 123, 140, 0.2) !important;
+        transition: all 0.3s ease !important;
+        display: block !important;
+    }
+
+    [data-testid="stSidebar"] .stButton:first-of-type button:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 8px 20px rgba(0, 123, 140, 0.4) !important;
+        filter: brightness(1.05);
+    }
+
+    /* 3. 主界面“跳转/操作”按钮样式 */
+    .stButton button {
+        background: #f28e52 !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 10px !important;
+        padding: 0.6rem 1.5rem !important;
+        font-weight: 600 !important;
+        box-shadow: 0 4px 15px rgba(242, 142, 82, 0.3) !important;
+        transition: all 0.2s ease !important;
+        width: auto !important;
+        min-width: 160px;
+    }
+
+    .stButton button:hover {
+        transform: scale(1.05) !important;
+        box-shadow: 0 6px 20px rgba(242, 142, 82, 0.4) !important;
+    }
+
+    /* 按钮公用点击缩放 */
+    button:active {
+        transform: scale(0.97) !important;
+    }
+
+    /* 4. 标题美化 */
+    .main-title {
+        font-size: 2.8rem;
+        font-weight: 900;
+        background: linear-gradient(135deg, #007b8c 0%, #00b5b8 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
         text-align: center;
-        margin-bottom: 0.5rem;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        margin: 1.5rem 0;
+        letter-spacing: -1px;
     }
-    
-    .subtitle {
-        font-size: 1.2rem;
-        color: #e8f4f8;
-        text-align: center;
-        margin-bottom: 2rem;
-        opacity: 0.9;
-    }
-    
-    /* 卡片样式 */
-    .metric-card {
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 15px;
+
+    /* 5. 核心指标卡片美化 */
+    .metric-container {
+        background: white;
+        border-radius: 20px;
         padding: 1.5rem;
-        margin: 0.5rem;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255,255,255,0.2);
-        transition: transform 0.3s ease;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+        border: 1px solid #f1f5f9;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
     }
     
-    .metric-card:hover {
+    .metric-container:hover {
         transform: translateY(-5px);
-        box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+        border-color: #e2e8f0;
     }
-    
+
+    .metric-container::after {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 4px;
+        background: linear-gradient(90deg, #007b8c, #00b5b8);
+    }
+
     .metric-value {
-        font-size: 2rem;
-        font-weight: bold;
-        color: #2c3e50;
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: #0f172a;
+        margin-top: 8px;
     }
-    
+
     .metric-label {
         font-size: 0.9rem;
-        color: #7f8c8d;
-        margin-top: 0.5rem;
+        color: #64748b;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
-    
-    /* 图表容器 */
-    .chart-container {
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 15px;
-        padding: 1.5rem;
-        margin: 1rem 0;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-        backdrop-filter: blur(10px);
+
+    /* 环比气泡 */
+    .kpi-change {
+        font-size: 0.75rem;
+        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: 20px;
+        position: absolute;
+        top: 15px;
+        right: 15px;
     }
-    
-    /* 侧边栏样式 */
-    .sidebar .sidebar-content {
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
+    .kpi-change.up { background-color: #dcfce7; color: #166534; }
+    .kpi-change.down { background-color: #fee2e2; color: #991b1b; }
+    .kpi-change.none { background-color: #f1f5f9; color: #475569; }
+
+    /* 6. 成交房号卡片 */
+    .house-card {
+        background: white;
+        border-radius: 12px;
+        padding: 1rem 1.2rem;
+        margin-bottom: 0.8rem;
+        border-left: 5px solid #f28e52;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
     }
-    
-    /* 按钮样式 */
-    .stButton>button {
-        background: linear-gradient(45deg, #3498db, #2980b9);
+    .house-card:hover {
+        background-color: #f8fafc;
+        transform: translateX(4px);
+    }
+    .house-info {
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+    .house-no {
+        font-weight: 800;
+        color: #0f172a;
+        font-size: 1.05rem; /* 字号加大 */
+        line-height: 1.2;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 8px;
+    }
+    .house-area {
+        color: #475569;
+        font-size: 0.95rem;
+    }
+    .house-price {
+        background: linear-gradient(90deg,#f28e52,#ffb380);
         color: white;
-        border: none;
-        border-radius: 25px;
-        padding: 0.5rem 1.5rem;
-        font-weight: bold;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        font-weight: 900;
+        padding: 0.6rem 1.2rem; /* 更大内边距 */
+        border-radius: 999px;
+        box-shadow: 0 10px 30px rgba(242,142,82,0.18);
+        margin-left: 16px;
+        white-space: nowrap;
+        flex-shrink: 0;
+        font-size: 1.05rem; /* 更大字号 */
+        min-width: 96px;
+        text-align: center;
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
-    
-    .stButton>button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+    .house-price:hover {
+        transform: translateY(-2px) scale(1.02);
+        box-shadow: 0 12px 36px rgba(242,142,82,0.22);
     }
-    
-    /* 数据表格样式 */
-    .dataframe {
-        border-radius: 10px;
+
+    /* 7. 成交明细总体卡片 */
+    .detail-card {
+        position: relative; /* 允许 ::after 定位 */
+        background: white;
+        border-radius: 14px;
+        padding: 1rem;
+        box-shadow: 0 8px 30px rgba(15,23,42,0.06);
+        border: 1px solid transparent;
+        margin-bottom: 1rem;
+        height: 580px; /* 固定高度，增加以容纳完整图表 */
+        box-sizing: border-box;
         overflow: hidden;
     }
-    
-    /* 展开器样式 */
-    .streamlit-expanderHeader {
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 10px;
-        border: 1px solid rgba(255,255,255,0.2);
+    .detail-card::after {
+        content: "";
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 6px; /* 渐变条高度 */
+        background: linear-gradient(90deg, #f28e52 0%, #ffb380 100%); /* 纯橙色渐变 */
+        border-top-left-radius: 14px;
+        border-top-right-radius: 14px;
+    }
+    .detail-card .card-header {
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        padding-bottom:0.5rem;
+        border-bottom: 1px solid #f1f5f9;
+        margin-bottom:0.75rem;
+        height: 56px;
+    }
+    .detail-card .card-title {
+        font-size:1.1rem;
+        font-weight:800;
+        color:#0f172a;
+    }
+    .detail-card .card-body {
+        height: calc(100% - 56px);
+        overflow-y:auto;
+        padding-right:6px;
+        padding-bottom: 16px;
+    }
+
+    /* 空状态样式：居中显示信息 */
+    .detail-empty {
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        color:#64748b;
+        font-weight:700;
+        padding:1.5rem 0;
+    }
+
+    /* 将紧跟在卡片后的按钮上移，视觉上看起来像在卡片内部 */
+    .detail-card + .stButton {
+        margin-top: -52px;
+        display:flex;
+        justify-content:flex-end;
+        margin-right: 10px;
+    }
+    .detail-card + .stButton button {
+        border-radius: 10px !important;
+        background: #f28e52 !important;
+        color: white !important;
+        box-shadow: 0 6px 18px rgba(242, 142, 82, 0.24) !important;
+        padding: 0.5rem 1rem !important;
+        border: none !important;
     }
 </style>
 """, unsafe_allow_html=True)
 
-# 侧边栏
-with st.sidebar:
-    st.markdown("## 🏠 控制面板")
-    st.markdown("---")
-    
-    # 数据更新按钮
-    if st.button("🔄 更新数据", key="update"):
-        st.info("请在终端运行数据更新脚本")
-    
-    # 日期选择
-    folders = [f for f in os.listdir('.') if os.path.isdir(f) and f.startswith('20')]
-    folders = sorted(folders, reverse=True)
-    if folders:
-        selected_date = st.selectbox("📅 选择数据日期", folders, index=0)
-    else:
-        st.error("未找到数据文件夹")
-        selected_date = None
-    
-    st.markdown("---")
-    st.markdown("### 📊 数据概览")
-    st.markdown("实时销售数据分析平台")
+# ==========================================
+# 2. 数据加载与处理函数
+# ==========================================
 
-# 主页面标题
-st.markdown('<div class="title">🏠 销售数据大屏</div>', unsafe_allow_html=True)
-st.markdown('<div class="subtitle">现代化数据可视化 | 实时销售监控 | 智能趋势分析</div>', unsafe_allow_html=True)
-
-# 加载数据
 @st.cache_data
-def load_data():
+def load_all_data():
+    """加载完整的JSON数据并转换为DataFrame"""
+    file_path = "data/total.json"
+    if not os.path.exists(file_path):
+        return pd.DataFrame() # 返回空DataFrame避免报错
+        
     try:
-        df = pd.read_csv("presale_stats.csv", encoding="utf-8-sig")
-        df['日期'] = pd.to_datetime(df['日期'])
+        with open(file_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        
+        df = pd.DataFrame(data)
+        if not df.empty and '日期' in df.columns:
+            df['日期'] = pd.to_datetime(df['日期'])
+            df = df.sort_values(by='日期') # 确保按日期排序
+            
+            # 转换数值列，处理空字符串等无效值为NaN
+            numeric_columns = [
+                '已签约套数', '已签约面积(M2)', '成交均价(￥/M2)', 
+                '面积(M2)', '总价(￥)', '均价(￥/M2)'
+            ]
+            for col in numeric_columns:
+                if col in df.columns:
+                    df[col] = pd.to_numeric(df[col], errors='coerce')
+        
         return df
     except Exception as e:
         st.error(f"数据加载失败: {e}")
-        return None
+        return pd.DataFrame()
 
-# 获取房屋面积信息
-@st.cache_data
-def get_house_area(building, room_number):
+def run_update_script():
+    """执行后端更新脚本"""
     try:
-        # 映射楼栋号：13 -> 5-13, 14 -> 5-14, etc.
-        if building.isdigit():
-            mapped_building = f"5-{building}"
-        else:
-            mapped_building = building
-            
-        file_path = f"houses_by_building/houses_{mapped_building}#住宅楼.csv"
-        if os.path.exists(file_path):
-            house_df = pd.read_csv(file_path, encoding="utf-8-sig")
-            # 直接查找包含房间号的房号
-            for _, row in house_df.iterrows():
-                house_number = str(row['房号'])
-                if room_number in house_number:
-                    return row['建筑面积(㎡)']
-        return None
+        # 设置环境变量
+        env = os.environ.copy()
+        base_path = '/home/zhujf/house' # 保持你的原始路径
+        env['PYTHONPATH'] = base_path
+        script_path = os.path.join(base_path, 'core/main.py')
+
+        result = subprocess.run(
+            [sys.executable, script_path],
+            capture_output=True,
+            text=True,
+            env=env,
+            cwd=base_path
+        )
+        return result
     except Exception as e:
-        return None
+        return str(e)
 
-# 解析最新成交户号并获取详细信息
-def get_latest_transactions():
-    if df is None or df.empty:
-        return []
+# ==========================================
+# 3. 侧边栏：控制区
+# ==========================================
+with st.sidebar:
+    st.image("https://cdn-icons-png.flaticon.com/512/25/25694.png", width=50)
+    st.header("控制面板")
     
-    latest_row = df.iloc[-1]
-    house_numbers = str(latest_row['成交户号']).strip()
-    
-    if not house_numbers or house_numbers == 'nan':
-        return []
-    
-    # 分割多个户号
-    house_list = [h.strip() for h in house_numbers.split(',') if h.strip()]
-    
-    transactions = []
-    total_area = latest_row['面积(M2)']
-    
-    for house in house_list:
-        # 解析户号格式，如 "13#1-501" -> building="13", room_number="501"
-        if '#' in house:
-            building, room_part = house.split('#', 1)
-            # 提取房间号（最后一部分）
-            if '-' in room_part:
-                room_number = room_part.split('-')[-1]  # 取最后一部分作为房间号
+    # 1. 更新按钮
+    if st.button("更新数据", use_container_width=True):
+        with st.spinner("正在抓取最新数据..."):
+            res = run_update_script()
+            if isinstance(res, str):
+                st.error(f"执行出错: {res}")
+            elif res.returncode == 0:
+                st.success("更新成功！")
+                st.cache_data.clear() # 清除缓存
+                st.rerun()
             else:
-                room_number = room_part
-            
-            area = get_house_area(building, room_number)
-            if area is None and total_area and len(house_list) > 0:
-                # 如果找不到具体面积，从总面积平均分配
-                area = total_area / len(house_list)
-            
-            transactions.append({
-                '户号': house,
-                '面积': area if area else "未找到"
-            })
+                st.error(f"更新失败:\n{res.stderr}")
     
-    return transactions
+    st.divider()
 
-df = load_data()
-if df is None or df.empty:
-    st.stop()
+    # 2. 数据加载
+    df_all = load_all_data()
+    
+    if df_all.empty:
+        st.warning("⚠️ 暂无数据，请先更新数据或检查 data/total.json")
+        st.stop() # 停止后续渲染
 
-# 关键指标卡片
-st.markdown("## 📈 核心指标")
+    # 3. 日期选择器
+    # 获取所有可用日期字符串列表（倒序）
+    available_dates = df_all['日期'].dt.strftime('%Y-%m-%d').tolist()
+    available_dates.reverse() # 最新的在前面
+    
+    if 'selected_date' not in st.session_state:
+        st.session_state.selected_date = available_dates[0] if available_dates else None
+
+    # 使用 key 直接绑定到 session_state，避免需要点击两次才能生效的问题
+    selected_date_str = st.selectbox(
+        "📅 选择查看日期",
+        available_dates,
+        key='selected_date'
+    )
+
+    # 保证 selected_date_str 有值（以防 available_dates 为空）
+    if not selected_date_str and available_dates:
+        st.session_state.selected_date = available_dates[0]
+        selected_date_str = st.session_state.selected_date
+    
+    # 获取选中日期的数据行
+    selected_row = df_all[df_all['日期'].dt.strftime('%Y-%m-%d') == selected_date_str].iloc[0]
+    
+    # 获取最新数据行（用于顶部大指标）
+    latest_row = df_all.iloc[-1]
+
+    st.info(f"当前显示: {selected_date_str}")
+    st.caption("数据来源: 北京住建委")
+
+# ==========================================
+# 4. 主界面：核心指标
+# ==========================================
+
+st.markdown('<div class="main-title">星耀未来成交数据看板</div>', unsafe_allow_html=True)
+
+# 顶部指标栏
 col1, col2, col3, col4 = st.columns(4)
 
-latest = df.iloc[-1]
+# 辅助函数：渲染漂亮的指标卡片
+def render_metric(label, value, col):
+    col.markdown(f"""
+    <div class="metric-container">
+        <div class="metric-value">{value}</div>
+        <div class="metric-label">{label}</div>
+    </div>
+    """, unsafe_allow_html=True)
 
 with col1:
-    st.markdown(f"""
-    <div class="metric-card">
-        <div class="metric-value">{int(latest["已签约套数"])}</div>
-        <div class="metric-label">已签约套数</div>
-    </div>
-    """, unsafe_allow_html=True)
-
+    render_metric("累计签约套数", int(latest_row["已签约套数"]), st)
 with col2:
-    st.markdown(f"""
-    <div class="metric-card">
-        <div class="metric-value">{latest["已签约面积(M2)"]:.1f}</div>
-        <div class="metric-label">已签约面积 (M²)</div>
-    </div>
-    """, unsafe_allow_html=True)
-
+    render_metric("累计签约面积 (㎡)", f"{latest_row['已签约面积(M2)']:,.1f}", st)
 with col3:
-    st.markdown(f"""
-    <div class="metric-card">
-        <div class="metric-value">¥{latest["成交均价(￥/M2)"]:,.0f}</div>
-        <div class="metric-label">成交均价 (¥/M²)</div>
-    </div>
-    """, unsafe_allow_html=True)
-
+    render_metric("累计成交均价", f"¥{latest_row['成交均价(￥/M2)']:,.0f}", st)
 with col4:
-    st.markdown(f"""
-    <div class="metric-card">
-        <div class="metric-value">¥{latest["均价(￥/M2)"]:,.0f}</div>
-        <div class="metric-label">最新均价 (¥/M²)</div>
-    </div>
-    """, unsafe_allow_html=True)
+    # 先提取所有有当日均价的记录（已在前面的 load_all_data 中转为数值 + NaN 处理）
+    valid_prices_df = df_all[
+        pd.notna(df_all['均价(￥/M2)']) & 
+        (df_all['均价(￥/M2)'] > 0)
+    ].sort_values('日期').reset_index(drop=True)  # 按日期升序，便于找前后
 
-# 最新成交户口
-st.markdown("## 🏠 最新成交户口")
-latest_transactions = get_latest_transactions()
+    if valid_prices_df.empty:
+        # 完全没有当日均价数据
+        st.markdown(f"""
+        <div class="metric-container">
+            <div class="kpi-change none">—</div>
+            <div class="metric-value">N/A</div>
+            <div class="metric-label">当日均价</div>
+        </div>
+        """, unsafe_allow_html=True)
+    else:
+        # 找到选中日期对应的行（如果有）
+        selected_date = pd.to_datetime(selected_date_str)
+        selected_valid_row = valid_prices_df[valid_prices_df['日期'] == selected_date]
 
-if latest_transactions:
-    col1, col2 = st.columns([1, 1])
-    
-    with col1:
-        st.markdown('<div class="chart-container">', unsafe_allow_html=True)
-        st.markdown("### 📋 成交户号")
-        for transaction in latest_transactions:
-            st.markdown(f"**{transaction['户号']}**")
-        st.markdown('</div>', unsafe_allow_html=True)
-    
-    with col2:
-        st.markdown('<div class="chart-container">', unsafe_allow_html=True)
-        st.markdown("### 📐 对应面积 (M²)")
-        for transaction in latest_transactions:
-            if isinstance(transaction['面积'], str):
-                st.markdown(f"**{transaction['面积']}**")
+        if not selected_valid_row.empty:
+            # 选中日期本身有数据，直接使用
+            current_row = selected_valid_row.iloc[0]
+            current_date_str = selected_date_str
+            is_substitute = False
+        else:
+            # 选中日期无数据，用最近一个有数据的（在选中日期之前或之后都行，但通常取 ≤ 选中日期的最新一个）
+            earlier_or_equal = valid_prices_df[valid_prices_df['日期'] <= selected_date]
+            if not earlier_or_equal.empty:
+                current_row = earlier_or_equal.iloc[-1]  # 选中日期前最近的一个
             else:
-                st.markdown(f"**{transaction['面积']:.2f}**")
-        st.markdown('</div>', unsafe_allow_html=True)
-else:
-    st.info("暂无最新成交户口信息")
+                current_row = valid_prices_df.iloc[0]    # 兜底：最早的一个
+            current_date_str = current_row['日期'].strftime('%Y-%m-%d')
+            is_substitute = True
 
-# 图表区域
-st.markdown("## 📊 数据可视化")
+        current_price = current_row['均价(￥/M2)']
 
-# 均价趋势图
-st.markdown('<div class="chart-container">', unsafe_allow_html=True)
-st.markdown("### 📈 价格趋势分析")
+        # 找到它的“前一个有记录的日期”（严格前一个）
+        current_idx = valid_prices_df[valid_prices_df['日期'] == current_row['日期']].index[0]
+        if current_idx > 0:
+            prev_row = valid_prices_df.iloc[current_idx - 1]
+            prev_price = prev_row['均价(￥/M2)']
+            change_pct = (current_price - prev_price) / prev_price * 100
+            change_str = f"{'↑' if change_pct > 0 else '↓'} {abs(change_pct):.1f}%"
+            change_class = "up" if change_pct > 0 else "down"
+        else:
+            change_str = "—"
+            change_class = "none"
 
-fig_price = go.Figure()
-fig_price.add_trace(go.Scatter(
-    x=df['日期'], 
-    y=df['成交均价(￥/M2)'], 
-    mode='lines+markers',
-    name='成交均价',
-    line=dict(color='#3498db', width=3),
-    marker=dict(size=8, color='#3498db')
-))
-fig_price.add_trace(go.Scatter(
-    x=df['日期'], 
-    y=df['均价(￥/M2)'], 
-    mode='lines+markers',
-    name='最新均价',
-    line=dict(color='#e74c3c', width=3),
-    marker=dict(size=8, color='#e74c3c')
-))
+        # 标签文字
+        if not is_substitute:
+            label_text = f"{selected_date_str} 当日均价"
+        else:
+            label_text = f"最新均价({current_date_str})"
 
-fig_price.update_layout(
-    title="",
-    xaxis_title="日期",
-    yaxis_title="价格 (¥/M²)",
-    template="plotly_white",
-    height=400,
-    margin=dict(l=20, r=20, t=20, b=20)
+        st.markdown(f"""
+        <div class="metric-container">
+            <div class="kpi-change {change_class}">{change_str}</div>
+            <div class="metric-value">¥{current_price:,.0f}</div>
+            <div class="metric-label">{label_text}</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+st.markdown("<br><br>", unsafe_allow_html=True)
+
+# ==========================================
+# 5. 主界面：具体成交明细 & 趋势图
+# ==========================================
+
+col_detail, col_chart = st.columns([4, 6])
+
+# 左侧：成交明细列表
+with col_detail:
+    # 将成交明细渲染为卡片样式，整体更美观
+    price = selected_row.get('均价(￥/M2)', 0)
+    if price == 0 or pd.isna(price):
+        # 当天无成交：在卡片内显示空状态并在卡片下方（视觉上为卡片内）放置跳转按钮
+        if not valid_prices_df.empty:
+            latest_valid_date_str = valid_prices_df.iloc[-1]['日期'].strftime('%Y-%m-%d')
+            def _goto_latest():
+                st.session_state['selected_date'] = latest_valid_date_str
+
+            card_html = textwrap.dedent(f"""
+<div class="detail-card">
+  <div class="card-header">
+    <div class="card-title">{selected_date_str} 成交明细</div>
+  </div>
+  <div class="card-body">
+    <div class="detail-empty">当天暂无成交记录。</div>
+  </div>
+</div>
+""").strip()
+            st.markdown(card_html, unsafe_allow_html=True)
+
+            st.button("跳转至最新成交", on_click=_goto_latest)
+        else:
+            # 全部数据都没有的兜底信息，仍然放在卡片内提醒用户
+            card_html = textwrap.dedent(f"""
+<div class="detail-card">
+  <div class="card-header">
+    <div class="card-title">{selected_date_str} 成交明细</div>
+  </div>
+  <div class="card-body">
+    <div class="detail-empty">暂无数据，请先更新或检查 data/total.json</div>
+  </div>
+</div>
+""").strip()
+            st.markdown(card_html, unsafe_allow_html=True)
+    else:
+        house_data = selected_row.get('成交户号', [])
+        if house_data and isinstance(house_data, list) and len(house_data) > 0:
+            # 将所有条目拼接为一个 HTML 块再一次性渲染，确保子元素在卡片内部
+            items_html = ""
+            for house in house_data:
+                b_name = house.get('building_name', '')
+                h_no = house.get('house_no', '')
+                area = house.get('area', 0)
+
+                if b_name and h_no:
+                    display_b_name = b_name.replace('#住宅楼', '').replace('5-', '')
+                    full_house_no = f"{display_b_name}#{h_no}"
+                else:
+                    full_house_no = f"{b_name} {h_no}".strip()
+
+                if not full_house_no:
+                    full_house_no = "未知房号"
+
+                # 转义用户数据，防止注入或标签未闭合导致页面异常显示
+                safe_full_house_no = html.escape(full_house_no)
+                safe_area = html.escape(str(area))
+
+                # 计算总价（建筑面积 * 当日均价），当 area 或 当日均价 无效时显示 N/A
+                try:
+                    area_val = float(area)
+                except Exception:
+                    area_val = None
+
+                if price and not pd.isna(price) and area_val and area_val > 0:
+                    total_price = area_val * price
+                    price_str = f"¥{total_price:,.0f}"
+                else:
+                    price_str = "N/A"
+
+                safe_price_str = html.escape(price_str)
+
+                items_html += f"""
+<div class="house-card">
+  <div class="house-info">
+    <div class="house-no">{safe_full_house_no}</div>
+    <div class="house-area">
+      <span>建筑面积: <b>{safe_area} ㎡</b></span>
+    </div>
+  </div>
+  <div class="house-price">{safe_price_str}</div>
+</div>
+"""
+
+            # 去除每行的缩进，避免被 Markdown 识别为代码块
+            items_html = textwrap.dedent(items_html).strip()
+
+            # 一次性渲染卡片及其内部内容，避免 Streamlit 将子块分离到不同容器中
+            card_html = textwrap.dedent(f"""
+<div class="detail-card">
+  <div class="card-header">
+    <div class="card-title">{selected_date_str} 成交明细</div>
+  </div>
+  <div class="card-body">
+{items_html}
+  </div>
+</div>
+""").strip()
+            st.markdown(card_html, unsafe_allow_html=True)
+
+            # 将跳转按钮也渲染（视觉上位于卡片内部右下方）
+            # latest_valid_date_str = valid_prices_df.iloc[-1]['日期'].strftime('%Y-%m-%d') if not valid_prices_df.empty else None
+            # def _goto_latest():
+            #     if latest_valid_date_str:
+            #         st.session_state['selected_date'] = latest_valid_date_str
+
+            # st.button("跳转至最新成交", on_click=_goto_latest)
+        else:
+            # 当天有均价但无具体户号信息，也在卡片内显示空状态
+            card_html = textwrap.dedent(f"""
+<div class="detail-card">
+  <div class="card-header">
+    <div class="card-title">{selected_date_str} 成交明细</div>
+  </div>
+  <div class="card-body">
+    <div class="detail-empty">当天暂无具体的成交户号记录。</div>
+  </div>
+</div>
+""").strip()
+            st.markdown(card_html, unsafe_allow_html=True)
+
+# 右侧：价格走势图表
+with col_chart:
+    fig = go.Figure()
+
+    # 累计均价线 - 青蓝色
+    fig.add_trace(go.Scatter(
+        x=df_all['日期'], y=df_all['成交均价(￥/M2)'],
+        mode='lines+markers', name='累计均价',
+        line=dict(width=3, color=COLOR_PRIMARY, shape='spline'),
+        marker=dict(size=6, color='white', line=dict(width=2, color=COLOR_PRIMARY)),
+        hovertemplate="累计均价: ¥%{y:,.0f}<extra></extra>"
+    ))
+    
+    # 当日均价线 - 橙黄色
+    fig.add_trace(go.Scatter(
+        x=df_all['日期'], y=df_all['均价(￥/M2)'],
+        mode='lines+markers', name='当日均价',
+        line=dict(width=3, color=COLOR_SECONDARY, shape='spline'),
+        marker=dict(size=6, color='white', line=dict(width=2, color=COLOR_SECONDARY)),
+        connectgaps=True,
+        hovertemplate="当日均价: ¥%{y:,.0f}<extra></extra>"
+    ))
+
+    # 选中日期的高亮圈
+    fig.add_trace(go.Scatter(
+        x=[selected_row['日期']], y=[selected_row['成交均价(￥/M2)']],
+        mode='markers', showlegend=False,
+        marker=dict(size=14, color=COLOR_PRIMARY, opacity=0.3, line=dict(width=2, color=COLOR_PRIMARY)),
+        hoverinfo='skip'
+    ))
+
+    fig.add_trace(go.Scatter(
+        x=[selected_row['日期']], y=[selected_row['均价(￥/M2)']],
+        mode='markers', showlegend=False,
+        marker=dict(size=14, color=COLOR_SECONDARY, opacity=0.3, line=dict(width=2, color=COLOR_SECONDARY)),
+        hoverinfo='skip'
+    ))
+
+    # 添加虚线
+    fig.add_trace(go.Scatter(
+        x=[selected_row['日期'], selected_row['日期']], 
+        y=[min(df_all['成交均价(￥/M2)'].min(), df_all['均价(￥/M2)'].min()), max(df_all['成交均价(￥/M2)'].max(), df_all['均价(￥/M2)'].max())], 
+        mode='lines', 
+        showlegend=False, 
+        line=dict(color='lightgray', dash='dot', width=1.5),  # 使用点状虚线，颜色更柔和，宽度较细
+        hoverinfo='skip'
+    ))
+
+    fig.update_layout(
+        height=500,  # 提高图表高度避免被裁切
+        margin=dict(l=40, r=20, t=18, b=100),  # 增加底部外边距以保证 x 轴标签完全可见
+        hovermode="x unified",
+        hoverlabel=dict(bgcolor='white', font_size=12, font_family="PingFang SC, Microsoft YaHei, sans-serif"),
+        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+        plot_bgcolor='rgba(0,0,0,0)',
+        paper_bgcolor='rgba(0,0,0,0)',
+        xaxis=dict(
+            showgrid=False,
+            tickformat="%Y-%m-%d",
+            linecolor='#e2e8f0',
+            showline=True,
+            showticklabels=True,
+            ticks='outside',
+            tickangle=-45,
+            tickfont=dict(color='#475569', size=11),
+            automargin=True
+        ),
+        yaxis=dict(
+            showgrid=True,
+            gridcolor='#f1f5f9',
+            tickformat=",.0f",
+            showline=True,
+            linecolor='#e2e8f0',
+            showticklabels=True,
+            tickfont=dict(color='#475569', size=11),
+            automargin=True
+        )
+    )
+
+    # 嵌入图表到与成交明细一致的卡片中（使用内联样式以便在 iframe 中正确显示）
+    fig_html = fig.to_html(full_html=False, include_plotlyjs='cdn')
+    # 包一层容器并加上小的 CSS reset，确保没有 body margin 导致溢出
+    wrapped_fig = textwrap.dedent(f"""
+<style>html,body{{margin:0;padding:0;background:transparent;}}</style>
+<div style="background: white; border-radius: 14px; padding: 1rem; box-shadow: 0 8px 30px rgba(15,23,42,0.06); border: 1px solid transparent; margin-bottom: 1rem; height: 580px; box-sizing: border-box; position: relative; overflow: hidden;">
+  <div style="position:absolute; top:0; left:0; width:100%; height:6px; background: linear-gradient(90deg, #f28e52 0%, #ffb380 100%); border-top-left-radius:14px; border-top-right-radius:14px;"></div>
+  <div style="display:flex; align-items:center; height:56px; padding-left:6px;">
+    <div style="font-size:1.1rem; font-weight:800; color:#0f172a;">📈 价格趋势分析</div>
+  </div>
+  <!-- 与成交明细一致的浅色分隔线 -->
+  <div style="border-bottom:1px solid #f1f5f9; margin: 0 8px 12px 8px; border-radius:4px;"></div>
+  <div style="height: calc(100% - 56px); overflow:visible; padding-right:6px; padding-left:6px; padding-bottom:96px;">
+    <div style="width:100%; height:100%; box-sizing:border-box;">
+{fig_html}
+    </div>
+  </div>
+</div>
+""").strip()
+
+    # 禁用 components 的 iframe 滚动，让 iframe 尺寸由 height 决定（我们已微调图高度）
+    components.html(wrapped_fig, height=580, scrolling=False)
+    
+# ==========================================
+# 6. 页脚
+# ==========================================
+st.markdown("---")
+st.markdown(
+    "<div style='text-align: center; color: #95a5a6; font-size: 0.8rem;'>"
+    f"最后更新时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} | © Star Future Data View"
+    "</div>", 
+    unsafe_allow_html=True
 )
-st.plotly_chart(fig_price, use_container_width=True)
-st.markdown('</div>', unsafe_allow_html=True)
-
-# 签约套数和面积趋势
-col1, col2 = st.columns(2)
-
-with col1:
-    st.markdown('<div class="chart-container">', unsafe_allow_html=True)
-    st.markdown("### 🏢 签约套数趋势")
-    
-    fig_units = px.bar(
-        df, 
-        x='日期', 
-        y='已签约套数',
-        color_discrete_sequence=['#27ae60']
-    )
-    fig_units.update_layout(
-        height=300,
-        margin=dict(l=20, r=20, t=20, b=20)
-    )
-    st.plotly_chart(fig_units, use_container_width=True)
-    st.markdown('</div>', unsafe_allow_html=True)
-
-with col2:
-    st.markdown('<div class="chart-container">', unsafe_allow_html=True)
-    st.markdown("### 📐 签约面积趋势")
-    
-    fig_area = px.area(
-        df, 
-        x='日期', 
-        y='已签约面积(M2)',
-        color_discrete_sequence=['#f39c12']
-    )
-    fig_area.update_layout(
-        height=300,
-        margin=dict(l=20, r=20, t=20, b=20)
-    )
-    st.plotly_chart(fig_area, use_container_width=True)
-    st.markdown('</div>', unsafe_allow_html=True)
-
-# 数据详情表格
-st.markdown("## 📋 详细数据")
-with st.expander("展开查看完整数据表格", expanded=False):
-    st.dataframe(
-        df.style.format({
-            '已签约面积(M2)': '{:.2f}',
-            '成交均价(￥/M2)': '{:,.0f}',
-            '均价(￥/M2)': '{:,.0f}',
-            '面积(M2)': '{:.2f}',
-            '总价(￥)': '{:,.0f}'
-        }),
-        use_container_width=True,
-        hide_index=True
-    )
-
-# # 页脚
-# st.markdown("---")
-# st.markdown("""
-# <div style='text-align: center; color: rgba(255,255,255,0.7); padding: 1rem;'>
-#     <p>💡 数据来源：presale_stats.csv | 现代化设计 by GitHub Copilot</p>
-#     <p>最后更新时间：{}</p>
-# </div>
-# """.format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")), unsafe_allow_html=True)
