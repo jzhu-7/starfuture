@@ -438,12 +438,8 @@ with col4:
             current_date_str = selected_date_str
             is_substitute = False
         else:
-            # 选中日期无数据，用最近一个有数据的（在选中日期之前或之后都行，但通常取 ≤ 选中日期的最新一个）
-            earlier_or_equal = valid_prices_df[valid_prices_df['日期'] <= selected_date]
-            if not earlier_or_equal.empty:
-                current_row = earlier_or_equal.iloc[-1]  # 选中日期前最近的一个
-            else:
-                current_row = valid_prices_df.iloc[0]    # 兜底：最早的一个
+            # 选中日期无数据：以数据集中**最新**的有记录日期为准（即始终以最新数据为基准）
+            current_row = valid_prices_df.iloc[-1]    # 使用数据中最新的有记录日期
             current_date_str = current_row['日期'].strftime('%Y-%m-%d')
             is_substitute = True
 
@@ -744,7 +740,7 @@ with col_chart:
 <div style="background: white; border-radius: 14px; padding: 1rem; box-shadow: 0 8px 30px rgba(15,23,42,0.06); border: 1px solid transparent; margin-bottom: 1rem; height: 580px; box-sizing: border-box; position: relative; overflow: hidden;">
   <div style="position:absolute; top:0; left:0; width:100%; height:6px; background: linear-gradient(90deg, #f28e52 0%, #ffb380 100%); border-top-left-radius:14px; border-top-right-radius:14px;"></div>
   <div style="display:flex; align-items:center; height:56px; padding-left:6px;">
-    <div style="font-size:1.1rem; font-weight:800; color:#0f172a;">📈 价格趋势分析</div>
+    <div style="font-size:1.1rem; font-weight:800; color:#0f172a;">价格趋势</div>
   </div>
   <!-- 与成交明细一致的浅色分隔线 -->
   <div style="border-bottom:1px solid #f1f5f9; margin: 0 8px 12px 8px; border-radius:4px;"></div>
