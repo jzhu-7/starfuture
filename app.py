@@ -626,8 +626,88 @@ with col_detail:
 
             # st.button("跳转至最新成交", on_click=_goto_latest)
         else:
-            # 当天有均价但无具体户号信息，也在卡片内显示空状态
-            card_html = textwrap.dedent(f"""
+            # 当天有均价但无具体户号信息：若存在面积或总价，则以与其他成交卡片相同的格式显示一条合成记录，
+            # 仅将户号替换为占位文本（默认：“无户号”），否则显示空状态
+            area_val = selected_row.get('面积(M2)')
+            total_val = selected_row.get('总价(￥)')
+            avg_val = selected_row.get('均价(￥/M2)')
+
+            has_area_or_total = ((area_val is not None and not pd.isna(area_val) and str(area_val) != "") or
+                                 (total_val is not None and not pd.isna(total_val) and str(total_val) != ""))
+
+            if has_area_or_total:
+                # 构造一条合成记录，保持与实际户号项完全一致的渲染逻辑（只是替换户号文本）
+                placeholder = "无户号"
+                fake_house = {
+                    'building_name': '',
+                    'house_no': placeholder,
+                    'area': area_val if area_val is not None and not pd.isna(area_val) and str(area_val) != "" else 0
+                }
+
+                # 按原有单条 house 渲染逻辑构建 HTML
+                b_name = fake_house.get('building_name', '')
+                h_no = fake_house.get('house_no', '')
+                area = fake_house.get('area', 0)
+
+                if b_name and h_no:
+                    display_b_name = b_name.replace('#住宅楼', '').replace('5-', '')
+                    full_house_no = f"{display_b_name}#{h_no}"
+                else:
+                    full_house_no = f"{b_name} {h_no}".strip()
+
+                if not full_house_no:
+                    full_house_no = "未知房号"
+
+                safe_full_house_no = html.escape(full_house_no)
+                safe_area = html.escape(str(area))
+
+                try:
+                    area_val_f = float(area)
+                except Exception:
+                    area_val_f = None
+
+                # 优先使用面积*当日均价计算总价，若不可用则使用 provided total_val
+                if price and not pd.isna(price) and area_val_f and area_val_f > 0:
+                    total_price = area_val_f * price
+                    price_str = f"¥{total_price:,.2f}"
+                else:
+                    try:
+                        if total_val is not None and not pd.isna(total_val) and str(total_val) != "":
+                            price_str = f"¥{float(total_val):,.2f}"
+                        else:
+                            price_str = "N/A"
+                    except Exception:
+                        price_str = "N/A"
+
+                safe_price_str = html.escape(price_str)
+
+                items_html = f"""
+<div class="house-card">
+  <div class="house-info">
+    <div class="house-no">{safe_full_house_no}</div>
+    <div class="house-area">
+      <span>建筑面积: <b>{safe_area} ㎡</b></span>
+    </div>
+  </div>
+  <div class="house-price">{safe_price_str}</div>
+</div>
+"""
+                items_html = textwrap.dedent(items_html).strip()
+
+                card_html = textwrap.dedent(f"""
+<div class="detail-card">
+  <div class="card-header">
+    <div class="card-title">{selected_date_str} 成交明细</div>
+  </div>
+  <div class="card-body">
+{items_html}
+  </div>
+</div>
+""").strip()
+                st.markdown(card_html, unsafe_allow_html=True)
+            else:
+                # 仍然显示空状态
+                card_html = textwrap.dedent(f"""
 <div class="detail-card">
   <div class="card-header">
     <div class="card-title">{selected_date_str} 成交明细</div>
@@ -637,7 +717,7 @@ with col_detail:
   </div>
 </div>
 """).strip()
-            st.markdown(card_html, unsafe_allow_html=True)
+                st.markdown(card_html, unsafe_allow_html=True)
 
 # 右侧：价格走势图表
 with col_chart:
