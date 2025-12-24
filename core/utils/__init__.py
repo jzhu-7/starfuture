@@ -8,7 +8,7 @@ from urllib.parse import urljoin
 import time
 import logging
 from typing import Dict, Optional
-from ..config import HEADERS, BASE_URL, TARGET_URL, REQUEST_TIMEOUT
+from ..config import HEADERS, get_project_config, REQUEST_TIMEOUT
 
 logger = logging.getLogger(__name__)
 
@@ -23,9 +23,15 @@ def fetch_html(url: str, timeout: int = REQUEST_TIMEOUT) -> str:
         logger.error(f"请求失败 {url}: {e}")
         raise
 
-def get_buildings_url() -> Dict[str, str]:
-    """获取楼栋URL映射"""
-    html = fetch_html(TARGET_URL)
+def get_buildings_url(project: str = 'house') -> Dict[str, str]:
+    """获取楼栋URL映射（按项目）
+    project: 'house' 或 'warehouse'
+    """
+    cfg = get_project_config(project)
+    target_url = cfg.get('TARGET_URL')
+    base_url = cfg.get('BASE_URL')
+
+    html = fetch_html(target_url)
     soup = BeautifulSoup(html, "html.parser")
 
     buildings = {}
@@ -34,14 +40,14 @@ def get_buildings_url() -> Dict[str, str]:
         href = a["href"]
         name = a.get_text(strip=True)
 
-        # 只筛选"楼栋链接"
+        # 只筛选"楼栋链接"（保留原有筛选逻辑，如需支持仓储项目请根据需要调整条件）
         if (
             "pageId=320833" in href
             and "buildingId=" in href
             and "salePermitId=" in href
             and name.endswith("住宅楼")
         ):
-            full_url = urljoin(BASE_URL, href)
+            full_url = urljoin(base_url, href)
             full_url = full_url.replace("https://", "http://", 1)
             buildings[name] = full_url
 

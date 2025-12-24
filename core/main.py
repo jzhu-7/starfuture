@@ -7,24 +7,27 @@ from .processors.data_processor import update_sales_data
 
 logger = logging.getLogger(__name__)
 
-def update_data():
-    """更新销售数据"""
-    logger.info("🚀 开始更新销售数据...")
-    success = update_sales_data()
+def update_data(project: str = None):
+    """更新销售数据（可指定项目：house|warehouse）"""
+    logger.info(f"🚀 开始更新销售数据... project={project}")
+    success = update_sales_data(project or 'house')
     if success:
         logger.info("✅ 数据更新完成")
     else:
         logger.error("❌ 数据更新失败")
 
-def update_areas():
-    """更新面积数据"""
-    logger.info("🚀 开始更新面积数据...")
+
+def update_areas(project: str = None):
+    """更新面积数据（可指定项目）"""
+    logger.info(f"🚀 开始更新面积数据... project={project}")
     try:
         from .scrapers.area_scraper import scrape_areas_data
-        scrape_areas_data()
+        # area scraper may read/write files under data/{project}/areas — ensure it can accept a project if necessary
+        scrape_areas_data(project=project) if 'project' in scrape_areas_data.__code__.co_varnames else scrape_areas_data()
         logger.info("✅ 面积数据更新完成")
     except Exception as e:
         logger.error(f"❌ 面积数据更新失败: {e}")
+
 
 def main():
     """主函数"""
@@ -48,14 +51,15 @@ def main():
 
     if len(sys.argv) > 1:
         command = sys.argv[1]
+        project = sys.argv[2] if len(sys.argv) > 2 else None
         if command == "areas":
-            update_areas()
+            update_areas(project)
         elif command == "data":
-            update_data()
+            update_data(project)
         else:
-            logger.info("用法: PYTHONPATH=/path/to/core python3 core/main.py [areas|data]")
+            logger.info("用法: PYTHONPATH=/path/to/core python3 core/main.py [areas|data] [project]")
     else:
-        # 默认更新数据
+        # 默认更新数据（默认项目）
         update_data()
 
 if __name__ == "__main__":

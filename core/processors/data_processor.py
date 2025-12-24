@@ -10,7 +10,7 @@ from datetime import datetime
 from typing import Dict, List, Optional, Tuple
 from bs4 import BeautifulSoup
 
-from ..config import DATA_URL, HEADERS, TOTAL_FILE, AREAS_FILE
+from ..config import get_project_config, HEADERS
 from ..utils import fetch_html
 from ..scrapers.status_scraper import get_status_changes
 from ..models import SalesStats, StatusChange
@@ -18,7 +18,7 @@ from ..models import SalesStats, StatusChange
 logger = logging.getLogger(__name__)
 
 def read_json_as_dict(json_file: str) -> Dict[str, Dict]:
-    """以日期为key读取JSON"""
+    """以日期为 key 读取 JSON 文件（按日期索引）"""
     if not os.path.exists(json_file):
         return {}
 
@@ -26,11 +26,14 @@ def read_json_as_dict(json_file: str) -> Dict[str, Dict]:
         data = json.load(f)
         return {item["日期"]: item for item in data}
 
+
 def write_json(data_by_date: Dict[str, Dict], json_file: str):
-    """写入JSON文件"""
+    """写入 JSON 文件（按日期排序）"""
     data_list = [data_by_date[d] for d in sorted(data_by_date.keys())]
+    os.makedirs(os.path.dirname(json_file), exist_ok=True)
     with open(json_file, "w", encoding="utf-8") as f:
         json.dump(data_list, f, ensure_ascii=False, indent=4)
+
 
 def find_base_record(data_by_date: Dict[str, Dict], today: str) -> Optional[Dict]:
     """找到用于对比的上一条记录"""
@@ -45,6 +48,7 @@ def find_base_record(data_by_date: Dict[str, Dict], today: str) -> Optional[Dict
         return data_by_date[dates[-2]]
 
     return None
+
 
 def parse_presale_contract_stats(html: str) -> Optional[SalesStats]:
     """解析期房签约统计数据"""
@@ -70,19 +74,24 @@ def parse_presale_contract_stats(html: str) -> Optional[SalesStats]:
         avg_price=float(data.get("成交均价(￥/M2)", "0")),
     )
 
-def build_house_area_map() -> Dict[str, Dict[str, float]]:
-    """构建房源面积映射"""
-    if not os.path.exists(AREAS_FILE):
-        raise FileNotFoundError(f"面积数据文件不存在: {AREAS_FILE}")
 
-    with open(AREAS_FILE, 'r', encoding='utf-8') as f:
+def build_house_area_map(project: str) -> Dict[str, Dict[str, float]]:
+    """构建房源面积映射（按项目）"""
+    cfg = get_project_config(project)
+    areas_file = cfg["AREAS_FILE"]
+
+    if not os.path.exists(areas_file):
+        raise FileNotFoundError(f"面积数据文件不存在: {areas_file}")
+
+    with open(areas_file, 'r', encoding='utf-8') as f:
         areas_data = json.load(f)
 
     house_area_map = {}
     for building, bdata in areas_data.items():
-        house_area_map[building] = {h["house_no"]: h["area"] for h in bdata["house_data"]}
+        house_area_map[building] = {h["house_no"]: h.get("area", 0.0) for h in bdata.get("house_data", [])}
 
     return house_area_map
+
 
 def calculate_incremental_data(stats: SalesStats, base_record: Optional[Dict]) -> Tuple[float, str, str]:
     """计算增量数据"""
@@ -107,6 +116,7 @@ def calculate_incremental_data(stats: SalesStats, base_record: Optional[Dict]) -
 
     return delta_area, delta_total, delta_unit
 
+
 def process_status_changes(changes: List[StatusChange], house_area_map: Dict[str, Dict[str, float]]) -> List[Dict]:
     """处理状态变化，添加面积信息"""
     processed_changes = []
@@ -126,16 +136,21 @@ def process_status_changes(changes: List[StatusChange], house_area_map: Dict[str
 
     return processed_changes
 
-def update_sales_data() -> bool:
-    """主数据更新流程"""
+
+def update_sales_data(project: str = "house") -> bool:
+    """主数据更新流程（支持选择项目）"""
     try:
+        cfg = get_project_config(project)
+        data_url = cfg["DATA_URL"]
+        total_file = cfg["TOTAL_FILE"]
+
         # 构建房源面积映射
-        house_area_map = build_house_area_map()
+        house_area_map = build_house_area_map(project)
 
         today = datetime.now().strftime("%Y-%m-%d")
 
         logger.info("🌐 请求页面...")
-        resp = requests.get(DATA_URL, headers=HEADERS, timeout=15)
+        resp = requests.get(data_url, headers=HEADERS, timeout=15)
         resp.raise_for_status()
         resp.encoding = "utf-8"
 
@@ -144,7 +159,7 @@ def update_sales_data() -> bool:
             logger.error("❌ 未获取期房签约统计")
             return False
 
-        data_by_date = read_json_as_dict(TOTAL_FILE)
+        data_by_date = read_json_as_dict(total_file)
         base_record = find_base_record(data_by_date, today)
 
         # 计算增量数据
@@ -164,15 +179,15 @@ def update_sales_data() -> bool:
 
         # 如果有新数据，处理状态变化
         if delta_area > 0:
-            changes = get_status_changes()
+            changes = get_status_changes(project)
             if changes:
                 processed_changes = process_status_changes(changes, house_area_map)
                 data_by_date[today]["成交户号"] = processed_changes
 
         # 重写JSON文件
-        write_json(data_by_date, TOTAL_FILE)
+        write_json(data_by_date, total_file)
 
-        logger.info(f"✅ {today} 数据已写入（同日自动覆盖）")
+        logger.info(f"✅ {today} 数据已写入（同日自动覆盖）：{total_file}")
         return True
 
     except Exception as e:

@@ -13,7 +13,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Dict, List, Tuple, Optional
 from bs4 import BeautifulSoup
 
-from ..config import HEADERS, SALES_DIR, COLOR_STATUS_MAP, MAX_WORKERS
+from ..config import get_project_config, HEADERS, COLOR_STATUS_MAP, MAX_WORKERS
 from ..utils import fetch_html, get_buildings_url
 from ..models import HouseData, BuildingData, StatusChange
 
@@ -80,9 +80,9 @@ def process_building(bid: str, url: str) -> Optional[BuildingData]:
         status_count=dict(counter)
     )
 
-def scrape_status_data() -> Dict[str, BuildingData]:
-    """抓取所有楼栋状态数据"""
-    BUILDING_URLS = get_buildings_url()
+def scrape_status_data(project: str = 'house') -> Dict[str, BuildingData]:
+    """抓取所有楼栋状态数据（按项目）"""
+    BUILDING_URLS = get_buildings_url(project=project)
     all_buildings_data = {}
 
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
@@ -95,10 +95,12 @@ def scrape_status_data() -> Dict[str, BuildingData]:
 
     return all_buildings_data
 
-def save_status_data(data: Dict[str, BuildingData], date: str):
-    """保存状态数据到文件"""
-    os.makedirs(SALES_DIR, exist_ok=True)
-    json_path = os.path.join(SALES_DIR, f"{date}.json")
+def save_status_data(data: Dict[str, BuildingData], date: str, project: str = 'house'):
+    """保存状态数据到文件（按项目）"""
+    cfg = get_project_config(project)
+    sales_dir = cfg.get('SALES_DIR')
+    os.makedirs(sales_dir, exist_ok=True)
+    json_path = os.path.join(sales_dir, f"{date}.json")
 
     # 转换为字典格式
     dict_data = {}
@@ -154,27 +156,29 @@ def compare_status_changes(prev_file: str, curr_file: str) -> List[StatusChange]
 
     return changes
 
-def get_latest_json_files() -> Tuple[str, str]:
-    """获取最新的两个JSON文件"""
-    if not os.path.exists(SALES_DIR):
-        raise ValueError("data/sales 目录不存在")
-    files = [f for f in os.listdir(SALES_DIR) if f.endswith('.json') and re.match(r'\d{4}-\d{2}-\d{2}\.json', f)]
+def get_latest_json_files(project: str = 'house') -> Tuple[str, str]:
+    """获取最新的两个JSON文件（按项目）"""
+    cfg = get_project_config(project)
+    sales_dir = cfg.get('SALES_DIR')
+    if not os.path.exists(sales_dir):
+        raise ValueError(f"{sales_dir} 目录不存在")
+    files = [f for f in os.listdir(sales_dir) if f.endswith('.json') and re.match(r'\d{4}-\d{2}-\d{2}\.json', f)]
     files.sort()
     if len(files) < 2:
         raise ValueError("至少需要两个JSON文件")
-    return os.path.join(SALES_DIR, files[-2]), os.path.join(SALES_DIR, files[-1])
+    return os.path.join(sales_dir, files[-2]), os.path.join(sales_dir, files[-1])
 
-def get_status_changes() -> List[StatusChange]:
-    """获取状态变化（完整流程）"""
+def get_status_changes(project: str = 'house') -> List[StatusChange]:
+    """获取状态变化（完整流程，按项目）"""
     today = datetime.now().strftime("%Y-%m-%d")
 
     # 抓取并保存当天数据
-    status_data = scrape_status_data()
-    save_status_data(status_data, today)
+    status_data = scrape_status_data(project=project)
+    save_status_data(status_data, today, project=project)
 
     # 比较状态变化
     try:
-        prev_file, curr_file = get_latest_json_files()
+        prev_file, curr_file = get_latest_json_files(project=project)
         changes = compare_status_changes(prev_file, curr_file)
         return changes
     except ValueError:

@@ -41,7 +41,7 @@ st.markdown("""
         color: white !important;
         border: none !important;
         padding: 0.75rem 1rem !important;
-        border-radius: 12px !important;
+        border-radius: 24px !important;
         font-weight: 700 !important;
         height: 3.5rem !important;
         width: 100% !important;
@@ -279,44 +279,48 @@ st.markdown("""
 # ==========================================
 
 @st.cache_data
-def load_all_data():
-    """加载完整的JSON数据并转换为DataFrame"""
-    file_path = "data/total.json"
+def load_all_data(project: str = "house"):
+    """加载指定项目的完整 JSON 数据并转换为 DataFrame
+    project: 'house' 或 'warehouse'
+    """
+    file_path = os.path.join("data", project, "total.json")
     if not os.path.exists(file_path):
-        return pd.DataFrame() # 返回空DataFrame避免报错
-        
+        return pd.DataFrame()  # 返回空DataFrame避免报错
+
     try:
         with open(file_path, "r", encoding="utf-8") as f:
             data = json.load(f)
-        
+
         df = pd.DataFrame(data)
         if not df.empty and '日期' in df.columns:
             df['日期'] = pd.to_datetime(df['日期'])
-            df = df.sort_values(by='日期') # 确保按日期排序
-            
+            df = df.sort_values(by='日期')  # 确保按日期排序
+
             # 转换数值列，处理空字符串等无效值为NaN
             numeric_columns = [
-                '已签约套数', '已签约面积(M2)', '成交均价(￥/M2)', 
+                '已签约套数', '已签约面积(M2)', '成交均价(￥/M2)',
                 '面积(M2)', '总价(￥)', '均价(￥/M2)'
             ]
             for col in numeric_columns:
                 if col in df.columns:
                     df[col] = pd.to_numeric(df[col], errors='coerce')
-        
+
         return df
     except Exception as e:
         st.error(f"数据加载失败: {e}")
         return pd.DataFrame()
     
-def run_update_script(timeout=300):
-    """执行后端更新脚本（使用相对路径 & 模块执行）"""
+def run_update_script(project: str = "house", command: str = "data", timeout=300):
+    """执行后端更新脚本（可以指定 project 与 command）
+    command: 'data' 或 'areas'
+    """
     try:
         env = os.environ.copy()
         base_path = os.path.dirname(os.path.abspath(__file__))  # 项目根
         env['PYTHONPATH'] = base_path
 
         result = subprocess.run(
-            [sys.executable, '-u', '-m', 'core.main'],
+            [sys.executable, '-u', '-m', 'core.main', command, project],
             capture_output=True,
             text=True,
             env=env,
@@ -335,52 +339,79 @@ def run_update_script(timeout=300):
 with st.sidebar:
     st.image("https://cdn-icons-png.flaticon.com/512/25/25694.png", width=50)
     st.header("控制面板")
-    
-    # 1. 更新按钮
+
+    # 项目选择（住宅 / 仓储）
+    project_map = {"住宅": "house", "仓储": "warehouse"}
+    default_proj = os.environ.get('PROJECT_TYPE', 'house')
+    default_label = '住宅' if default_proj == 'house' else '仓储'
+
+    def _on_project_change():
+        st.cache_data.clear()
+        # 不直接修改与 selectbox 对应的 session_state（修改后可能导致 Streamlit 错误）
+        # 我们使用基于项目的 selectbox key（例如 selected_date_house / selected_date_warehouse）来避免冲突
+        # 仅清理缓存，组件会在下一次交互时依据当前项目自动显示正确的选项
+
+    selected_label = st.radio(
+        "🔁 切换数据视角",
+        options=list(project_map.keys()),
+        index=0 if default_label == '住宅' else 1,
+        key='project_label',
+        horizontal=True,
+        on_change=_on_project_change
+    )
+    project = project_map[selected_label]
+
+    # 更新数据（抓取并写入 data/{project}/total.json）
     if st.button("更新数据", use_container_width=True):
         with st.spinner("正在抓取最新数据..."):
-            res = run_update_script()
+            res = run_update_script(project, 'data')
             if isinstance(res, str):
                 st.error(f"执行出错: {res}")
-            elif res.returncode == 0:
+            elif getattr(res, 'returncode', 0) == 0:
                 st.success("更新成功！")
-                st.cache_data.clear() # 清除缓存
+                st.cache_data.clear()  # 清除缓存
                 st.rerun()
             else:
-                st.error(f"更新失败:\n{res.stderr}")
-    
+                st.error(f"更新失败:\n{getattr(res, 'stderr', res)}")
+
+
+
     st.divider()
 
-    # 2. 数据加载
-    df_all = load_all_data()
-    
+    # 2. 数据加载（按项目）
+    df_all = load_all_data(project)
+
     if df_all.empty:
-        st.warning("⚠️ 暂无数据，请先更新数据或检查 data/total.json")
-        st.stop() # 停止后续渲染
+        st.warning(f"⚠️ 暂无数据，请先更新数据或检查 data/{project}/total.json")
+        st.stop()  # 停止后续渲染
 
     # 3. 日期选择器
     # 获取所有可用日期字符串列表（倒序）
     available_dates = df_all['日期'].dt.strftime('%Y-%m-%d').tolist()
     available_dates.reverse() # 最新的在前面
     
-    if 'selected_date' not in st.session_state:
-        st.session_state.selected_date = available_dates[0] if available_dates else None
+    # 使用基于项目的 key，避免不同项目共享同一个会话状态导致冲突
+    selected_date_key = f"selected_date_{project}"
 
-    # 使用 key 直接绑定到 session_state，避免需要点击两次才能生效的问题
-    selected_date_str = st.selectbox(
-        "📅 选择查看日期",
-        available_dates,
-        key='selected_date'
-    )
+    # 在可选日期存在时创建 selectbox（确保 index 0 为最新日期）
+    if available_dates:
+        selected_date_str = st.selectbox(
+            "📅 选择查看日期",
+            available_dates,
+            index=0,
+            key=selected_date_key
+        )
+    else:
+        st.warning(f"⚠️ 未找到日期数据，请先更新 data/{project}/total.json")
+        st.stop()  # 停止后续渲染
 
-    # 保证 selected_date_str 有值（以防 available_dates 为空）
+    # 保证 selected_date_str 有值（以防 selectbox 返回空字符串）
     if not selected_date_str and available_dates:
-        st.session_state.selected_date = available_dates[0]
-        selected_date_str = st.session_state.selected_date
-    
+        selected_date_str = available_dates[0]
+
     # 获取选中日期的数据行
     selected_row = df_all[df_all['日期'].dt.strftime('%Y-%m-%d') == selected_date_str].iloc[0]
-    
+
     # 获取最新数据行（用于顶部大指标）
     latest_row = df_all.iloc[-1]
 
@@ -410,7 +441,11 @@ with col1:
 with col2:
     render_metric("累计签约面积 (㎡)", f"{latest_row['已签约面积(M2)']:,.1f}", st)
 with col3:
-    render_metric("累计成交均价", f"¥{latest_row['成交均价(￥/M2)']:,.0f}", st)
+    price_val = latest_row.get('成交均价(￥/M2)')
+    if pd.isna(price_val):
+        render_metric("累计成交均价", "N/A", st)
+    else:
+        render_metric("累计成交均价", f"¥{price_val:,.2f}", st)
 with col4:
     # 先提取所有有当日均价的记录（已在前面的 load_all_data 中转为数值 + NaN 处理）
     valid_prices_df = df_all[
@@ -463,13 +498,15 @@ with col4:
         else:
             label_text = f"最新均价({current_date_str})"
 
+        current_price_display = f"¥{current_price:,.2f}" if not pd.isna(current_price) else "N/A"
+
         st.markdown(f"""
         <div class="metric-container">
             <div class="kpi-change {change_class}">{change_str}</div>
-            <div class="metric-value">¥{current_price:,.0f}</div>
+            <div class="metric-value">{current_price_display}</div>
             <div class="metric-label">{label_text}</div>
         </div>
-        """, unsafe_allow_html=True)
+        """, unsafe_allow_html=True) 
 
 st.markdown("<br><br>", unsafe_allow_html=True)
 
@@ -488,7 +525,7 @@ with col_detail:
         if not valid_prices_df.empty:
             latest_valid_date_str = valid_prices_df.iloc[-1]['日期'].strftime('%Y-%m-%d')
             def _goto_latest():
-                st.session_state['selected_date'] = latest_valid_date_str
+                st.session_state[selected_date_key] = latest_valid_date_str
 
             card_html = textwrap.dedent(f"""
 <div class="detail-card">
@@ -547,7 +584,7 @@ with col_detail:
 
                 if price and not pd.isna(price) and area_val and area_val > 0:
                     total_price = area_val * price
-                    price_str = f"¥{total_price:,.0f}"
+                    price_str = f"¥{total_price:,.2f}"
                 else:
                     price_str = "N/A"
 
@@ -663,7 +700,7 @@ with col_chart:
         mode='lines+markers', name='累计均价', legendgroup='累计均价',
         line=dict(width=3, color=COLOR_PRIMARY, shape='spline'),
         marker=dict(size=6, color='white', line=dict(width=2, color=COLOR_PRIMARY)),
-        hovertemplate="累计均价: ¥%{y:,.0f}<extra></extra>"
+        hovertemplate="累计均价: ¥%{y:,.2f}<extra></extra>"
     ))
 
     # 当日均价线 - 橙黄色（置于渐变之上）
@@ -673,7 +710,7 @@ with col_chart:
         line=dict(width=3, color=COLOR_SECONDARY, shape='spline'),
         marker=dict(size=6, color='white', line=dict(width=2, color=COLOR_SECONDARY)),
         connectgaps=True,
-        hovertemplate="当日均价: ¥%{y:,.0f}<extra></extra>"
+        hovertemplate="当日均价: ¥%{y:,.2f}<extra></extra>"
     ))
 
     # 选中日期的高亮圈

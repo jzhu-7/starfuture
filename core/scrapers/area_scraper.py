@@ -11,7 +11,7 @@ from typing import Dict, List, Optional, Tuple
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 
-from ..config import HEADERS, BASE_URL
+from ..config import HEADERS, get_project_config
 from ..utils import fetch_html, get_buildings_url, safe_delay
 from ..models import HouseData, BuildingData
 
@@ -44,7 +44,7 @@ def extract_build_area(html: str) -> Optional[float]:
         tds = tr.find_all("td")
         if len(tds) == 2:
             left = tds[0].get_text(strip=True)
-            if left == "建筑面积":
+            if "建筑面积" in left:
                 right = tds[1].get_text(strip=True)
                 m = re.search(r"([\d.]+)", right)
                 if m:
@@ -89,9 +89,15 @@ def process_building_data(bid: str, url: str) -> Tuple[str, List[HouseData]]:
         logger.error(f"❌ 请求楼盘页面失败：{e}")
         return bid, []
 
-def scrape_areas_data(output_file: str = "data/areas/areas.json") -> Dict[str, BuildingData]:
-    """主流程：抓取所有楼栋面积数据"""
-    BUILDING_URLS = get_buildings_url()
+def scrape_areas_data(project: str = 'house', output_file: str = None) -> Dict[str, BuildingData]:
+    """主流程：抓取所有楼栋面积数据（按项目）
+    output_file 可被覆盖，否则默认写入 data/{project}/areas/areas.json
+    """
+    if output_file is None:
+        cfg = get_project_config(project)
+        output_file = cfg.get('AREAS_FILE')
+
+    BUILDING_URLS = get_buildings_url(project=project)
     data = {}
 
     with ThreadPoolExecutor(max_workers=5) as executor:
@@ -108,6 +114,7 @@ def scrape_areas_data(output_file: str = "data/areas/areas.json") -> Dict[str, B
                 )
 
     # 导出 JSON
+    os.makedirs(os.path.dirname(output_file), exist_ok=True)
     with open(output_file, "w", encoding="utf-8") as f:
         # 转换为字典格式以保持兼容性
         dict_data = {}
