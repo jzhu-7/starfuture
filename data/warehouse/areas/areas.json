@@ -1,0 +1,1007 @@
+{
+    "5-1#住宅楼": {
+        "building_name": "5-1#住宅楼",
+        "house_data": [
+            {
+                "house_no": "-101",
+                "area": 77.59
+            },
+            {
+                "house_no": "-102",
+                "area": 64.85
+            },
+            {
+                "house_no": "-103",
+                "area": 29.6
+            },
+            {
+                "house_no": "-104",
+                "area": 57.77
+            },
+            {
+                "house_no": "-105",
+                "area": 69.49
+            }
+        ]
+    },
+    "5-10#住宅楼": {
+        "building_name": "5-10#住宅楼",
+        "house_data": [
+            {
+                "house_no": "-101",
+                "area": 51.21
+            },
+            {
+                "house_no": "-105",
+                "area": 41.63
+            },
+            {
+                "house_no": "-108",
+                "area": 41.63
+            },
+            {
+                "house_no": "-111",
+                "area": 41.63
+            },
+            {
+                "house_no": "-114",
+                "area": 51.21
+            }
+        ]
+    },
+    "5-12#住宅楼": {
+        "building_name": "5-12#住宅楼",
+        "house_data": [
+            {
+                "house_no": "-101",
+                "area": 23.07
+            },
+            {
+                "house_no": "-102",
+                "area": 55.29
+            },
+            {
+                "house_no": "-104",
+                "area": 15.22
+            },
+            {
+                "house_no": "-105",
+                "area": 15.22
+            },
+            {
+                "house_no": "-110",
+                "area": 15.22
+            },
+            {
+                "house_no": "-111",
+                "area": 15.22
+            },
+            {
+                "house_no": "-116",
+                "area": 15.22
+            },
+            {
+                "house_no": "-117",
+                "area": 15.22
+            },
+            {
+                "house_no": "-119",
+                "area": 35.34
+            },
+            {
+                "house_no": "-121",
+                "area": 46.67
+            },
+            {
+                "house_no": "-122",
+                "area": 15.22
+            },
+            {
+                "house_no": "-123",
+                "area": 15.22
+            },
+            {
+                "house_no": "-125",
+                "area": 50.87
+            }
+        ]
+    },
+    "5-13#住宅楼": {
+        "building_name": "5-13#住宅楼",
+        "house_data": [
+            {
+                "house_no": "-104",
+                "area": 16.61
+            },
+            {
+                "house_no": "-105",
+                "area": 16.61
+            },
+            {
+                "house_no": "-106",
+                "area": 38.49
+            },
+            {
+                "house_no": "-110",
+                "area": 40.98
+            },
+            {
+                "house_no": "-111",
+                "area": 40.39
+            },
+            {
+                "house_no": "-112",
+                "area": 16.61
+            },
+            {
+                "house_no": "-113",
+                "area": 38.49
+            },
+            {
+                "house_no": "-116",
+                "area": 38.49
+            },
+            {
+                "house_no": "-117",
+                "area": 16.61
+            }
+        ]
+    },
+    "5-15#住宅楼": {
+        "building_name": "5-15#住宅楼",
+        "house_data": [
+            {
+                "house_no": "-202",
+                "area": 32.69
+            },
+            {
+                "house_no": "-203",
+                "area": 33.25
+            },
+            {
+                "house_no": "-204",
+                "area": 33.25
+            },
+            {
+                "house_no": "-205",
+                "area": 37.32
+            },
+            {
+                "house_no": "-206",
+                "area": 37.32
+            },
+            {
+                "house_no": "-207",
+                "area": 33.25
+            },
+            {
+                "house_no": "-208",
+                "area": 33.25
+            },
+            {
+                "house_no": "-209",
+                "area": 37.32
+            },
+            {
+                "house_no": "-210",
+                "area": 37.32
+            },
+            {
+                "house_no": "-211",
+                "area": 33.25
+            },
+            {
+                "house_no": "-212",
+                "area": 33.25
+            },
+            {
+                "house_no": "-213",
+                "area": 37.32
+            },
+            {
+                "house_no": "-214",
+                "area": 37.32
+            },
+            {
+                "house_no": "-215",
+                "area": 33.25
+            },
+            {
+                "house_no": "-216",
+                "area": 42.57
+            }
+        ]
+    },
+    "5-17#住宅楼": {
+        "building_name": "5-17#住宅楼",
+        "house_data": [
+            {
+                "house_no": "-201",
+                "area": 39.71
+            },
+            {
+                "house_no": "-202",
+                "area": 31.77
+            },
+            {
+                "house_no": "-203",
+                "area": 35.66
+            },
+            {
+                "house_no": "-205",
+                "area": 31.77
+            },
+            {
+                "house_no": "-206",
+                "area": 31.77
+            },
+            {
+                "house_no": "-209",
+                "area": 31.77
+            },
+            {
+                "house_no": "-215",
+                "area": 65.82
+            }
+        ]
+    },
+    "5-2#住宅楼": {
+        "building_name": "5-2#住宅楼",
+        "house_data": [
+            {
+                "house_no": "-101",
+                "area": 57.95
+            },
+            {
+                "house_no": "-102",
+                "area": 57.95
+            },
+            {
+                "house_no": "-103",
+                "area": 57.95
+            },
+            {
+                "house_no": "-104",
+                "area": 57.95
+            },
+            {
+                "house_no": "-105",
+                "area": 49.89
+            }
+        ]
+    },
+    "5-14#住宅楼": {
+        "building_name": "5-14#住宅楼",
+        "house_data": [
+            {
+                "house_no": "-101",
+                "area": 30.37
+            },
+            {
+                "house_no": "-102",
+                "area": 60.09
+            },
+            {
+                "house_no": "-103",
+                "area": 38.01
+            },
+            {
+                "house_no": "-104",
+                "area": 29.0
+            },
+            {
+                "house_no": "-105",
+                "area": 32.56
+            },
+            {
+                "house_no": "-106",
+                "area": 32.56
+            },
+            {
+                "house_no": "-107",
+                "area": 29.0
+            },
+            {
+                "house_no": "-108",
+                "area": 29.0
+            },
+            {
+                "house_no": "-109",
+                "area": 32.56
+            },
+            {
+                "house_no": "-110",
+                "area": 32.56
+            },
+            {
+                "house_no": "-111",
+                "area": 29.0
+            },
+            {
+                "house_no": "-112",
+                "area": 29.0
+            },
+            {
+                "house_no": "-113",
+                "area": 32.56
+            },
+            {
+                "house_no": "-115",
+                "area": 29.0
+            },
+            {
+                "house_no": "-116",
+                "area": 38.01
+            },
+            {
+                "house_no": "-117",
+                "area": 47.88
+            },
+            {
+                "house_no": "-118",
+                "area": 45.53
+            },
+            {
+                "house_no": "-201",
+                "area": 60.09
+            },
+            {
+                "house_no": "-202",
+                "area": 38.01
+            },
+            {
+                "house_no": "-203",
+                "area": 29.0
+            },
+            {
+                "house_no": "-205",
+                "area": 32.56
+            },
+            {
+                "house_no": "-206",
+                "area": 29.0
+            },
+            {
+                "house_no": "-207",
+                "area": 29.0
+            },
+            {
+                "house_no": "-208",
+                "area": 32.56
+            },
+            {
+                "house_no": "-209",
+                "area": 32.56
+            }
+        ]
+    },
+    "5-16#住宅楼": {
+        "building_name": "5-16#住宅楼",
+        "house_data": [
+            {
+                "house_no": "-101",
+                "area": 44.69
+            },
+            {
+                "house_no": "-102",
+                "area": 46.72
+            },
+            {
+                "house_no": "-103",
+                "area": 37.09
+            },
+            {
+                "house_no": "-104",
+                "area": 28.3
+            },
+            {
+                "house_no": "-105",
+                "area": 31.77
+            },
+            {
+                "house_no": "-106",
+                "area": 31.77
+            },
+            {
+                "house_no": "-107",
+                "area": 28.3
+            },
+            {
+                "house_no": "-109",
+                "area": 31.77
+            },
+            {
+                "house_no": "-110",
+                "area": 31.77
+            },
+            {
+                "house_no": "-111",
+                "area": 28.3
+            },
+            {
+                "house_no": "-112",
+                "area": 37.09
+            },
+            {
+                "house_no": "-113",
+                "area": 46.72
+            },
+            {
+                "house_no": "-114",
+                "area": 44.69
+            },
+            {
+                "house_no": "-201",
+                "area": 58.46
+            },
+            {
+                "house_no": "-202",
+                "area": 35.56
+            },
+            {
+                "house_no": "-207",
+                "area": 28.3
+            },
+            {
+                "house_no": "-210",
+                "area": 28.3
+            }
+        ]
+    },
+    "5-4#住宅楼": {
+        "building_name": "5-4#住宅楼",
+        "house_data": [
+            {
+                "house_no": "-101",
+                "area": 76.48
+            },
+            {
+                "house_no": "-102",
+                "area": 70.62
+            },
+            {
+                "house_no": "-103",
+                "area": 35.57
+            },
+            {
+                "house_no": "-104",
+                "area": 72.11
+            },
+            {
+                "house_no": "-105",
+                "area": 56.57
+            },
+            {
+                "house_no": "-106",
+                "area": 78.25
+            }
+        ]
+    },
+    "5-11#住宅楼": {
+        "building_name": "5-11#住宅楼",
+        "house_data": [
+            {
+                "house_no": "-101",
+                "area": 28.52
+            },
+            {
+                "house_no": "-102",
+                "area": 21.15
+            },
+            {
+                "house_no": "-103",
+                "area": 33.67
+            },
+            {
+                "house_no": "-104",
+                "area": 29.2
+            },
+            {
+                "house_no": "-105",
+                "area": 28.83
+            },
+            {
+                "house_no": "-106",
+                "area": 28.96
+            },
+            {
+                "house_no": "-107",
+                "area": 26.06
+            },
+            {
+                "house_no": "-108",
+                "area": 28.75
+            },
+            {
+                "house_no": "-109",
+                "area": 28.75
+            },
+            {
+                "house_no": "-110",
+                "area": 26.92
+            },
+            {
+                "house_no": "-111",
+                "area": 29.85
+            },
+            {
+                "house_no": "-112",
+                "area": 29.66
+            },
+            {
+                "house_no": "-113",
+                "area": 31.25
+            },
+            {
+                "house_no": "-114",
+                "area": 29.85
+            },
+            {
+                "house_no": "-115",
+                "area": 26.92
+            },
+            {
+                "house_no": "-116",
+                "area": 28.75
+            },
+            {
+                "house_no": "-117",
+                "area": 28.75
+            },
+            {
+                "house_no": "-120",
+                "area": 28.83
+            },
+            {
+                "house_no": "-121",
+                "area": 29.19
+            },
+            {
+                "house_no": "-122",
+                "area": 34.27
+            },
+            {
+                "house_no": "-123",
+                "area": 21.15
+            },
+            {
+                "house_no": "-124",
+                "area": 28.52
+            },
+            {
+                "house_no": "-125",
+                "area": 28.52
+            },
+            {
+                "house_no": "-126",
+                "area": 21.49
+            },
+            {
+                "house_no": "-128",
+                "area": 28.52
+            },
+            {
+                "house_no": "-129",
+                "area": 28.52
+            },
+            {
+                "house_no": "-130",
+                "area": 22.49
+            },
+            {
+                "house_no": "-131",
+                "area": 22.49
+            },
+            {
+                "house_no": "-132",
+                "area": 28.52
+            },
+            {
+                "house_no": "-133",
+                "area": 28.52
+            },
+            {
+                "house_no": "-134",
+                "area": 21.49
+            },
+            {
+                "house_no": "-135",
+                "area": 21.49
+            },
+            {
+                "house_no": "-136",
+                "area": 28.52
+            },
+            {
+                "house_no": "-201",
+                "area": 17.93
+            },
+            {
+                "house_no": "-202",
+                "area": 21.15
+            },
+            {
+                "house_no": "-203",
+                "area": 26.42
+            },
+            {
+                "house_no": "-204",
+                "area": 21.83
+            },
+            {
+                "house_no": "-205",
+                "area": 29.79
+            },
+            {
+                "house_no": "-207",
+                "area": 29.96
+            },
+            {
+                "house_no": "-208",
+                "area": 29.39
+            },
+            {
+                "house_no": "-210",
+                "area": 30.93
+            },
+            {
+                "house_no": "-211",
+                "area": 29.96
+            },
+            {
+                "house_no": "-212",
+                "area": 29.96
+            },
+            {
+                "house_no": "-214",
+                "area": 29.79
+            },
+            {
+                "house_no": "-215",
+                "area": 28.83
+            },
+            {
+                "house_no": "-216",
+                "area": 29.2
+            },
+            {
+                "house_no": "-217",
+                "area": 21.15
+            },
+            {
+                "house_no": "-218",
+                "area": 17.33
+            },
+            {
+                "house_no": "-222",
+                "area": 24.4
+            }
+        ]
+    },
+    "5-7#住宅楼": {
+        "building_name": "5-7#住宅楼",
+        "house_data": [
+            {
+                "house_no": "-101",
+                "area": 75.06
+            },
+            {
+                "house_no": "-103",
+                "area": 34.82
+            },
+            {
+                "house_no": "-106",
+                "area": 56.49
+            },
+            {
+                "house_no": "-107",
+                "area": 56.49
+            },
+            {
+                "house_no": "-108",
+                "area": 74.25
+            }
+        ]
+    },
+    "5-6#住宅楼": {
+        "building_name": "5-6#住宅楼",
+        "house_data": [
+            {
+                "house_no": "-101",
+                "area": 24.67
+            },
+            {
+                "house_no": "-102",
+                "area": 59.35
+            },
+            {
+                "house_no": "-103",
+                "area": 49.99
+            },
+            {
+                "house_no": "-104",
+                "area": 16.3
+            },
+            {
+                "house_no": "-105",
+                "area": 16.3
+            },
+            {
+                "house_no": "-106",
+                "area": 49.99
+            },
+            {
+                "house_no": "-107",
+                "area": 37.86
+            },
+            {
+                "house_no": "-108",
+                "area": 37.86
+            },
+            {
+                "house_no": "-109",
+                "area": 49.99
+            },
+            {
+                "house_no": "-110",
+                "area": 16.3
+            },
+            {
+                "house_no": "-111",
+                "area": 16.3
+            },
+            {
+                "house_no": "-112",
+                "area": 49.99
+            },
+            {
+                "house_no": "-113",
+                "area": 39.44
+            },
+            {
+                "house_no": "-114",
+                "area": 39.44
+            },
+            {
+                "house_no": "-115",
+                "area": 49.99
+            },
+            {
+                "house_no": "-116",
+                "area": 16.3
+            },
+            {
+                "house_no": "-117",
+                "area": 49.99
+            },
+            {
+                "house_no": "-118",
+                "area": 37.86
+            },
+            {
+                "house_no": "-119",
+                "area": 37.15
+            },
+            {
+                "house_no": "-120",
+                "area": 22.29
+            },
+            {
+                "house_no": "-121",
+                "area": 22.29
+            },
+            {
+                "house_no": "-122",
+                "area": 51.98
+            }
+        ]
+    },
+    "5-9#住宅楼": {
+        "building_name": "5-9#住宅楼",
+        "house_data": [
+            {
+                "house_no": "-101",
+                "area": 22.88
+            },
+            {
+                "house_no": "-102",
+                "area": 55.22
+            },
+            {
+                "house_no": "-104",
+                "area": 15.13
+            },
+            {
+                "house_no": "-105",
+                "area": 15.13
+            },
+            {
+                "house_no": "-110",
+                "area": 15.13
+            },
+            {
+                "house_no": "-116",
+                "area": 15.13
+            },
+            {
+                "house_no": "-117",
+                "area": 15.13
+            }
+        ]
+    },
+    "5-5#住宅楼": {
+        "building_name": "5-5#住宅楼",
+        "house_data": [
+            {
+                "house_no": "-101",
+                "area": 23.62
+            },
+            {
+                "house_no": "-102",
+                "area": 28.0
+            },
+            {
+                "house_no": "-103",
+                "area": 31.08
+            },
+            {
+                "house_no": "-104",
+                "area": 17.06
+            },
+            {
+                "house_no": "-105",
+                "area": 17.06
+            },
+            {
+                "house_no": "-106",
+                "area": 42.15
+            },
+            {
+                "house_no": "-107",
+                "area": 39.68
+            },
+            {
+                "house_no": "-108",
+                "area": 39.68
+            },
+            {
+                "house_no": "-109",
+                "area": 42.15
+            },
+            {
+                "house_no": "-110",
+                "area": 17.06
+            },
+            {
+                "house_no": "-111",
+                "area": 17.06
+            },
+            {
+                "house_no": "-112",
+                "area": 39.6
+            },
+            {
+                "house_no": "-113",
+                "area": 39.02
+            },
+            {
+                "house_no": "-114",
+                "area": 17.06
+            },
+            {
+                "house_no": "-115",
+                "area": 17.06
+            },
+            {
+                "house_no": "-116",
+                "area": 39.6
+            },
+            {
+                "house_no": "-117",
+                "area": 37.27
+            },
+            {
+                "house_no": "-118",
+                "area": 37.27
+            },
+            {
+                "house_no": "-119",
+                "area": 39.6
+            },
+            {
+                "house_no": "-120",
+                "area": 17.06
+            },
+            {
+                "house_no": "-121",
+                "area": 29.53
+            },
+            {
+                "house_no": "-122",
+                "area": 17.93
+            },
+            {
+                "house_no": "-123",
+                "area": 28.2
+            },
+            {
+                "house_no": "-124",
+                "area": 28.2
+            }
+        ]
+    },
+    "5-8#住宅楼": {
+        "building_name": "5-8#住宅楼",
+        "house_data": [
+            {
+                "house_no": "-101",
+                "area": 37.0
+            },
+            {
+                "house_no": "-104",
+                "area": 16.81
+            },
+            {
+                "house_no": "-105",
+                "area": 16.81
+            },
+            {
+                "house_no": "-106",
+                "area": 38.98
+            },
+            {
+                "house_no": "-107",
+                "area": 16.81
+            },
+            {
+                "house_no": "-108",
+                "area": 16.81
+            },
+            {
+                "house_no": "-109",
+                "area": 38.98
+            },
+            {
+                "house_no": "-110",
+                "area": 38.41
+            },
+            {
+                "house_no": "-113",
+                "area": 38.98
+            },
+            {
+                "house_no": "-116",
+                "area": 38.98
+            }
+        ]
+    },
+    "5-3#住宅楼": {
+        "building_name": "5-3#住宅楼",
+        "house_data": [
+            {
+                "house_no": "-101",
+                "area": 32.83
+            },
+            {
+                "house_no": "-102",
+                "area": 52.89
+            },
+            {
+                "house_no": "-103",
+                "area": 52.89
+            },
+            {
+                "house_no": "-104",
+                "area": 52.89
+            },
+            {
+                "house_no": "-105",
+                "area": 52.89
+            },
+            {
+                "house_no": "-106",
+                "area": 45.54
+            }
+        ]
+    }
+}

@@ -25,4 +25,3 @@ coverage.xml
 # 项目特定
 logs/
 *.tmp
-data/
