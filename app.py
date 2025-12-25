@@ -9,6 +9,11 @@ import html
 import textwrap
 import streamlit.components.v1 as components
 from datetime import datetime
+from core.utils.time_utils import now_in_zone, set_process_tz
+
+# 设置进程时区为 Asia/Shanghai（Unix 系统会调用 time.tzset）
+set_process_tz()
+
 
 # ==========================================
 # 1. 页面配置与全局样式
@@ -918,7 +923,7 @@ with col_chart:
 st.markdown("---")
 st.markdown(
     "<div style='text-align: center; color: #95a5a6; font-size: 0.8rem;'>"
-    f"最后更新时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} | © Star Future Data View"
+    f"最后更新时间: {now_in_zone().strftime('%Y-%m-%d %H:%M:%S')} | © Star Future Data View"
     "</div>", 
     unsafe_allow_html=True
-)
+) 

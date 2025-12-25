@@ -4,6 +4,7 @@
 """
 import logging
 from .processors.data_processor import update_sales_data
+from .utils.time_utils import set_process_tz
 
 logger = logging.getLogger(__name__)
 
@@ -31,6 +32,9 @@ def update_areas(project: str = None):
 
 def main():
     """主函数"""
+    # 设定进程默认时区（UTC/其他服务器默认时区可能不同）
+    set_process_tz()
+
     # 配置日志 - 同时输出到控制台和文件
     # import os
     # 获取项目根目录

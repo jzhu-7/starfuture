@@ -7,6 +7,7 @@ import json
 import requests
 import logging
 from datetime import datetime
+from ..utils.time_utils import now_in_zone
 from typing import Dict, List, Optional, Tuple
 from bs4 import BeautifulSoup
 
@@ -147,7 +148,8 @@ def update_sales_data(project: str = "house") -> bool:
         # 构建房源面积映射
         house_area_map = build_house_area_map(project)
 
-        today = datetime.now().strftime("%Y-%m-%d")
+        # 使用时区感知的当前日期（默认 Asia/Shanghai）
+        today = now_in_zone().strftime("%Y-%m-%d")
 
         logger.info("🌐 请求页面...")
         resp = requests.get(data_url, headers=HEADERS, timeout=15)

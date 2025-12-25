@@ -8,6 +8,7 @@ import re
 import requests
 import logging
 from datetime import datetime
+from ..utils.time_utils import now_in_zone
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Dict, List, Tuple, Optional
@@ -170,7 +171,8 @@ def get_latest_json_files(project: str = 'house') -> Tuple[str, str]:
 
 def get_status_changes(project: str = 'house') -> List[StatusChange]:
     """获取状态变化（完整流程，按项目）"""
-    today = datetime.now().strftime("%Y-%m-%d")
+    # 使用时区感知的当前日期（默认 Asia/Shanghai）
+    today = now_in_zone().strftime("%Y-%m-%d")
 
     # 抓取并保存当天数据
     status_data = scrape_status_data(project=project)

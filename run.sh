@@ -13,6 +13,9 @@ source "$SCRIPT_DIR/.venv/bin/activate"
 # 设置Python路径
 export PYTHONPATH="$SCRIPT_DIR:$PYTHONPATH"
 
+# 设置进程时区（可按需修改为其他时区，例如 Asia/Shanghai）
+export TZ="Asia/Shanghai"
+
 # 启动Streamlit应用
 echo "📊 正在启动Streamlit应用..."
 echo "🌐 应用将在浏览器中打开，通常访问 http://localhost:8501"
