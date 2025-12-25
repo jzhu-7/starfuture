@@ -362,8 +362,7 @@ with st.sidebar:
     project = project_map[selected_label]
 
     # 更新数据：已改为自动定时更新（见仓库 Actions）。手动更新按钮已移除，避免在 UI 中直接触发抓取。
-    st.info("🔁 已启用自动定时更新：每天 **07:00、12:00、20:00（CST / UTC+8）**，住宅与仓储均会更新；若需立即触发，请在本地或 CI 中运行 `python -m core.main data [house|warehouse]`。")
-
+    st.info("🔁 已启用定时更新")
     st.divider()
 
     # 2. 数据加载（按项目）
