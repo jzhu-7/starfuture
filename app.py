@@ -274,6 +274,59 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+# 移动端响应式样式：进一步优化窄屏表现（减小间距、卡片全宽、图表高度更小）
+st.markdown("""
+<style>
+    /* Responsive: 平板/窄屏优化 */
+    @media (max-width: 768px) {
+        /* 页面容器左右内边距减小，避免卡片被挤出边界 */
+        .block-container { padding-left: 12px !important; padding-right: 12px !important; }
+
+        .main-title { font-size: 1.4rem !important; margin: 0.6rem 0; }
+        .metric-container { padding: 0.8rem !important; border-radius: 12px !important; margin-bottom: 0.7rem !important; }
+        .metric-value { font-size: 1.25rem !important; }
+        .metric-label { font-size: 0.78rem !important; }
+
+        /* 让列在窄屏下占满宽度，避免横向拥挤 */
+        .stColumns, .stColumns > div {
+            display: block !important;
+            width: 100% !important;
+        }
+
+        .stButton button { width: 100% !important; min-width: 0 !important; }
+        .house-card { display: block !important; padding: 0.6rem 0.8rem !important; border-radius: 10px !important; }
+        .house-info { margin-bottom: 6px !important; }
+        .house-no { white-space: normal !important; overflow: visible !important; text-overflow: unset !important; word-break: break-word !important; font-size: 0.95rem !important; }
+        .house-area { font-size: 0.85rem !important; }
+        .house-price { display: block !important; margin: 6px 0 0 0 !important; width: 100% !important; text-align: right !important; min-width: 0 !important; font-size: 0.95rem !important; padding: 0.4rem 0.6rem !important; }
+
+        .detail-card { height: auto !important; padding: 0.6rem !important; }
+        .detail-card .card-body { height: auto !important; overflow: visible !important; padding-bottom: 8px !important; }
+        .detail-card iframe, .detail-card .js-plotly-plot { height: 320px !important; max-height: 320px !important; }
+        .detail-card .card-header { height: 44px !important; }
+        .detail-empty { padding: 0.9rem !important; }
+
+        /* 缩小顶部卡片间距，整体更紧凑 */
+        .metric-container + .metric-container { margin-top: 6px !important; }
+    }
+
+    /* Responsive: 手机更窄屏优化 */
+    @media (max-width: 420px) {
+        .main-title { font-size: 1.15rem !important; }
+        .metric-container { padding: 0.6rem !important; border-radius: 10px !important; }
+        .metric-value { font-size: 1.05rem !important; }
+        .kpi-change { display: none !important; }
+        .house-price { text-align: center !important; }
+        .house-card { gap: 6px !important; }
+        .metric-container::after { height: 3px !important; }
+        .stButton button { padding: 0.45rem 0.6rem !important; }
+
+        /* 进一步压缩图表高度 */
+        .detail-card iframe, .detail-card .js-plotly-plot { height: 280px !important; max-height: 280px !important; }
+    }
+</style>
+""", unsafe_allow_html=True)
+
 # ==========================================
 # 2. 数据加载与处理函数
 # ==========================================
