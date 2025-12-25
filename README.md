@@ -29,7 +29,8 @@
 
 - 启动与刷新
   - 启动：运行 `streamlit run app.py`，浏览器打开后即可看到仪表盘。
-  - 手动更新数据：点击左侧栏的 **更新数据** 按钮，会触发后端脚本（等同于 `python -m core.main`），页面会显示加载 Spinner，完成后给出成功或失败提示；成功后页面会自动刷新并清除缓存。
+  - 更新方式：为提高安全性与稳定性，已从 UI 中移除手动“更新数据”按钮，改为由仓库中的 GitHub Actions 定时任务执行（每天 **07:00、12:00、20:00**，CST / UTC+8，分别对应 Workflow 的 UTC 时间）。若你需要立即更新，可在本地或 CI 中运行 `python -m core.main data [house|warehouse]`。  
+  - 若想禁用自动更新，请在 GitHub 仓库 Actions 页面停用 `Scheduled Data Update` workflow，或修改 `.github/workflows/scheduled_update.yml`。
 
 - 侧边栏（控制面板）
   - **更新数据**：触发抓取与处理流程（请耐心等待，脚本运行会输出日志信息）。

@@ -361,20 +361,8 @@ with st.sidebar:
     )
     project = project_map[selected_label]
 
-    # 更新数据（抓取并写入 data/{project}/total.json）
-    if st.button("更新数据", use_container_width=True):
-        with st.spinner("正在抓取最新数据..."):
-            res = run_update_script(project, 'data')
-            if isinstance(res, str):
-                st.error(f"执行出错: {res}")
-            elif getattr(res, 'returncode', 0) == 0:
-                st.success("更新成功！")
-                st.cache_data.clear()  # 清除缓存
-                st.rerun()
-            else:
-                st.error(f"更新失败:\n{getattr(res, 'stderr', res)}")
-
-
+    # 更新数据：已改为自动定时更新（见仓库 Actions）。手动更新按钮已移除，避免在 UI 中直接触发抓取。
+    st.info("🔁 已启用自动定时更新：每天 **07:00、12:00、20:00（CST / UTC+8）**，住宅与仓储均会更新；若需立即触发，请在本地或 CI 中运行 `python -m core.main data [house|warehouse]`。")
 
     st.divider()
 
