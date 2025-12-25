@@ -212,7 +212,7 @@ st.markdown("""
         box-shadow: 0 8px 30px rgba(15,23,42,0.06);
         border: 1px solid transparent;
         margin-bottom: 1rem;
-        height: 580px; /* 固定高度，增加以容纳完整图表 */
+        height: 520px; /* 统一高度，保证与图表容器一致 */
         box-sizing: border-box;
         overflow: hidden;
     }
@@ -244,6 +244,30 @@ st.markdown("""
         overflow-y:auto;
         padding-right:6px;
         padding-bottom: 16px;
+    }
+
+    /* Ensure embedded charts are clipped to card rounded corners */
+    .detail-card .plotly-graph-div,
+    .detail-card iframe,
+    .detail-card .js-plotly-plot,
+    .detail-card .main-svg-container {
+        border-radius: 12px;
+        overflow: hidden;
+        box-sizing: border-box;
+        max-width: 100%;
+    }
+
+    /* Inner chart wrapper for scaling (desktop 90%, mobile 100% with 2/1 aspect) */
+    .inner-chart {
+        width: 90%;
+        margin: 0 auto;
+        aspect-ratio: 2/1;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    @media (max-width: 768px) {
+        .inner-chart { width: 100% !important; aspect-ratio: 2/1; }
     }
 
     /* 空状态样式：居中显示信息 */
@@ -321,8 +345,14 @@ st.markdown("""
         .metric-container::after { height: 3px !important; }
         .stButton button { padding: 0.45rem 0.6rem !important; }
 
-        /* 进一步压缩图表高度 */
+        /* 进一步压缩图表高度，并限制 Plotly 元素不溢出 */
         .detail-card iframe, .detail-card .js-plotly-plot { height: 280px !important; max-height: 280px !important; }
+        .plotly-graph-div, .js-plotly-plot, .main-svg-container { max-width:100% !important; max-height:100% !important; height:100% !important; overflow:hidden !important; }
+        .detail-card iframe { width:100% !important; }
+
+        /* 强制所有嵌入 iframe 在父页面显示为圆角并裁剪 */
+        iframe { border-radius: 12px !important; overflow: hidden !important; }
+        .detail-card iframe { border-radius: 12px !important; overflow: hidden !important; }
     }
 </style>
 """, unsafe_allow_html=True)
@@ -859,7 +889,7 @@ with col_chart:
     ))
 
     fig.update_layout(
-        height=500,  # 提高图表高度避免被裁切
+        autosize=True,
         margin=dict(l=40, r=20, t=18, b=100),  # 增加底部外边距以保证 x 轴标签完全可见
         hovermode="x unified",
         hoverlabel=dict(bgcolor='white', font_size=12, font_family="PingFang SC, Microsoft YaHei, sans-serif"),
@@ -890,27 +920,27 @@ with col_chart:
     )
 
     # 嵌入图表到与成交明细一致的卡片中（使用内联样式以便在 iframe 中正确显示）
-    fig_html = fig.to_html(full_html=False, include_plotlyjs='cdn')
-    # 包一层容器并加上小的 CSS reset，确保没有 body margin 导致溢出
+    fig_html = fig.to_html(full_html=False, include_plotlyjs='cdn', config={'responsive': True})
+    # 包一层容器并加上小的 CSS reset，确保没有 body margin 导致溢出，并使用 min-height 以便移动端缩小
     wrapped_fig = textwrap.dedent(f"""
-<style>html,body{{margin:0;padding:0;background:transparent;}} .modebar, .plotly .modebar, .js-plotly-plot .modebar{{display:none !important;}} </style>
-<div style="background: white; border-radius: 14px; padding: 1rem; box-shadow: 0 8px 30px rgba(15,23,42,0.06); border: 1px solid transparent; margin-bottom: 1rem; height: 580px; box-sizing: border-box; position: relative; overflow: hidden;">
-  <div style="position:absolute; top:0; left:0; width:100%; height:6px; background: linear-gradient(90deg, #f28e52 0%, #ffb380 100%); border-top-left-radius:14px; border-top-right-radius:14px;"></div>
-  <div style="display:flex; align-items:center; height:56px; padding-left:6px;">
-    <div style="font-size:1.1rem; font-weight:800; color:#0f172a;">价格趋势</div>
-  </div>
-  <!-- 与成交明细一致的浅色分隔线 -->
-  <div style="border-bottom:1px solid #f1f5f9; margin: 0 8px 12px 8px; border-radius:4px;"></div>
-  <div style="height: calc(100% - 56px); overflow:visible; padding-right:6px; padding-left:6px; padding-bottom:96px;">
-    <div style="width:100%; height:100%; box-sizing:border-box;">
-{fig_html}
+    <style>html,body{{margin:0;padding:0;background:transparent;}} .modebar, .plotly .modebar, .js-plotly-plot .modebar{{display:none !important;}} .plotly-graph-div {{width:100% !important; height:100% !important;}}</style>
+    <div style="background: white; border-radius: 14px; padding: 1rem; box-shadow: 0 8px 30px rgba(15,23,42,0.06); border: 1px solid transparent; margin-bottom: 1rem; min-height: 520px; box-sizing: border-box; position: relative; overflow: hidden;">
+      <div style="position:absolute; top:0; left:0; width:100%; height:6px; background: linear-gradient(90deg, #f28e52 0%, #ffb380 100%); border-top-left-radius:14px; border-top-right-radius:14px;"></div>
+      <div style="display:flex; align-items:center; height:56px; padding-left:6px;">
+        <div style="font-size:1.1rem; font-weight:800; color:#0f172a;">价格趋势</div>
+      </div>
+      <!-- 与成交明细一致的浅色分隔线 -->
+      <div style="border-bottom:1px solid #f1f5f9; margin: 0 8px 12px 8px; border-radius:4px;"></div>
+      <div style="height: calc(100% - 56px); overflow:hidden; padding-right:6px; padding-left:6px; padding-bottom:8px;">
+        <div class="inner-chart" style="width:90%; margin:0 auto; aspect-ratio:2/1; box-sizing:border-box; overflow:hidden; max-width:100%; border-radius:12px;">
+    {fig_html}
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-""").strip()
+    """).strip()
 
     # 禁用 components 的 iframe 滚动，让 iframe 尺寸由 height 决定（我们已微调图高度）
-    components.html(wrapped_fig, height=580, scrolling=False)
+    components.html(wrapped_fig, height=520, scrolling=False)
     
 # ==========================================
 # 6. 页脚
