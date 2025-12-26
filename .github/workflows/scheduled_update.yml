@@ -48,16 +48,31 @@ jobs:
           git diff --staged --name-only || true
 
       - name: Create Pull Request for data changes (if any)
-        uses: peter-evans/create-pull-request@v4
+        id: cpr
+        uses: peter-evans/create-pull-request@v8
         with:
-          # Uses a user-provided PAT if set (secrets.PERSONAL_TOKEN), otherwise falls back to GITHUB_TOKEN
-          token: ${{ secrets.PERSONAL_TOKEN || secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PERSONAL_TOKEN }}
           commit-message: "chore: scheduled data update [skip ci]"
           branch: update/data-${{ github.run_id }}
           title: "chore: scheduled data update"
           body: "Automated data update"
           labels: "automated,data-update"
           add-paths: "data/**"
+
+      - name: Auto approve created PR (if any)
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: juliangruber/approve-pull-request-action@v2
+        with:
+          github-token: ${{ secrets.PERSONAL_TOKEN }}
+          number: ${{ steps.cpr.outputs.pull-request-number }}
+
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.PERSONAL_TOKEN }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
 
       - name: Upload data artifact (for debugging)
         uses: actions/upload-artifact@v4
