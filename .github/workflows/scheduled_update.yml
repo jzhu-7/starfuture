@@ -52,7 +52,7 @@ jobs:
           title: "chore: scheduled data update"
           body: "Automated data update"
           labels: "automated,data-update"
-          paths: "data/**"
+          add-paths: "data/**"
 
       - name: Upload data artifact (for debugging)
         uses: actions/upload-artifact@v4
