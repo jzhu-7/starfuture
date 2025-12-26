@@ -14,6 +14,9 @@ from core.utils.time_utils import now_in_zone, set_process_tz
 # 设置进程时区为 Asia/Shanghai（Unix 系统会调用 time.tzset）
 set_process_tz()
 
+def clear_cache():
+    st.cache_data.clear()
+
 
 # ==========================================
 # 1. 页面配置与全局样式
@@ -42,22 +45,22 @@ st.markdown("""
 
     /* 2. 侧边栏“更新数据”按钮专供样式 */
     [data-testid="stSidebar"] .stButton:first-of-type button {
-        background: #007b8c !important;
+        background: #f28e52 !important;
         color: white !important;
         border: none !important;
-        padding: 0.75rem 1rem !important;
-        border-radius: 24px !important;
-        font-weight: 700 !important;
-        height: 3.5rem !important;
-        width: 100% !important;
-        box-shadow: 0 4px 12px rgba(0, 123, 140, 0.2) !important;
-        transition: all 0.3s ease !important;
-        display: block !important;
+        padding: 0.6rem 1.5rem !important;
+        border-radius: 70px !important;
+        font-weight: 600 !important;
+        height: auto !important;
+        width: auto !important;
+        box-shadow: 0 4px 15px rgba(242, 142, 82, 0.3) !important;
+        transition: all 0.2s ease !important;
+        display: inline-block !important;
     }
 
     [data-testid="stSidebar"] .stButton:first-of-type button:hover {
         transform: translateY(-2px) !important;
-        box-shadow: 0 8px 20px rgba(0, 123, 140, 0.4) !important;
+        box-shadow: 0 8px 20px rgba(242, 142, 82, 0.4) !important;
         filter: brightness(1.05);
     }
 
@@ -420,7 +423,8 @@ with st.sidebar:
     project = project_map[selected_label]
 
     # 更新数据：已改为自动定时更新（见仓库 Actions）。手动更新按钮已移除，避免在 UI 中直接触发抓取。
-    st.info("🔁 已启用定时更新")
+    st.button("刷新数据", on_click=clear_cache)
+
     st.divider()
 
     # 2. 数据加载（按项目）
