@@ -34,14 +34,29 @@ jobs:
       - name: Run update for warehouse
         run: python -m core.main data warehouse
 
-      - name: Commit and push changes (if any)
+      - name: Debug git status and staged changes
         run: |
+          git status --porcelain
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/house/total.json data/warehouse/total.json || true
-          if ! git diff --staged --quiet; then
-            git commit -m "chore: scheduled data update [skip ci]"
-            git push || true
-          else
-            echo "No changes to commit."
-          fi
+          echo "Staged files:"
+          git diff --staged --name-only || true
+
+      - name: Create Pull Request for data changes (if any)
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: scheduled data update [skip ci]"
+          branch: update/data-${{ github.run_id }}
+          title: "chore: scheduled data update"
+          body: "Automated data update"
+          labels: "automated,data-update"
+          paths: "data/**"
+
+      - name: Upload data artifact (for debugging)
+        uses: actions/upload-artifact@v4
+        with:
+          name: data-files
+          path: data
+
