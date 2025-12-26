@@ -339,7 +339,7 @@ st.markdown("""
 # 2. 数据加载与处理函数
 # ==========================================
 
-@st.cache_data
+@st.cache_data(ttl=3600) # 缓存1小时
 def load_all_data(project: str = "house"):
     """加载指定项目的完整 JSON 数据并转换为 DataFrame
     project: 'house' 或 'warehouse'
