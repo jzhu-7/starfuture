@@ -47,32 +47,35 @@ jobs:
           echo "Staged files:"
           git diff --staged --name-only || true
 
-      - name: Create Pull Request for data changes (if any)
-        id: cpr
-        uses: peter-evans/create-pull-request@v8
-        with:
-          token: ${{ secrets.PERSONAL_TOKEN }}
-          commit-message: "chore: scheduled data update [skip ci]"
-          branch: update/data-${{ github.run_id }}
-          title: "chore: scheduled data update"
-          body: "Automated data update"
-          labels: "automated,data-update"
-          add-paths: "data/**"
+      - name: Commit changes (if any)
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/house/total.json data/warehouse/total.json || true
+          if git diff --staged --quiet; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            git commit -m "chore: scheduled data update [skip ci]" || true
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
 
-      - name: Auto approve created PR (if any)
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: juliangruber/approve-pull-request-action@v2
-        with:
-          github-token: ${{ secrets.PERSONAL_TOKEN }}
-          number: ${{ steps.cpr.outputs.pull-request-number }}
+      - name: Push changes to default branch (if any)
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          BRANCH=$(git rev-parse --abbrev-ref HEAD)
+          echo "Pushing to branch $BRANCH"
+          git remote set-url origin https://x-access-token:$PERSONAL_TOKEN@github.com/$REPO.git
+          git push origin HEAD:$BRANCH
 
-      - name: Enable Pull Request Automerge
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: peter-evans/enable-pull-request-automerge@v3
+      - name: Upload data artifact (for debugging)
+        uses: actions/upload-artifact@v4
         with:
-          token: ${{ secrets.PERSONAL_TOKEN }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-          merge-method: squash
+          name: data-files
+          path: data
 
       - name: Upload data artifact (for debugging)
         uses: actions/upload-artifact@v4
