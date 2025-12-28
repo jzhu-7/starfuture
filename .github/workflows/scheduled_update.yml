@@ -43,7 +43,7 @@ jobs:
           git status --porcelain
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/house/total.json data/warehouse/total.json || true
+          git add data/ || true
           echo "Staged files:"
           git diff --staged --name-only || true
 
@@ -52,7 +52,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/house/total.json data/warehouse/total.json || true
+          git add data/ || true
           if git diff --staged --quiet; then
             echo "changed=false" >> $GITHUB_OUTPUT
           else
