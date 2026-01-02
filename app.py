@@ -434,36 +434,56 @@ with st.sidebar:
         st.warning(f"⚠️ 暂无数据，请先更新数据或检查 data/{project}/total.json")
         st.stop()  # 停止后续渲染
 
-    # 3. 日期选择器
-    # 获取所有可用日期字符串列表（倒序）
-    available_dates = df_all['日期'].dt.strftime('%Y-%m-%d').tolist()
-    available_dates.reverse() # 最新的在前面
+    # 3. 日期选择器（日历形式，智能验证）
+    # 获取数据日期范围
+    min_date = df_all['日期'].min().date()
+    max_date = df_all['日期'].max().date()
+    latest_date = df_all['日期'].max().date()
     
-    # 使用基于项目的 key，避免不同项目共享同一个会话状态导致冲突
-    selected_date_key = f"selected_date_{project}"
-
-    # 在可选日期存在时创建 selectbox（确保 index 0 为最新日期）
-    if available_dates:
-        selected_date_str = st.selectbox(
-            "📅 选择查看日期",
-            available_dates,
-            index=0,
-            key=selected_date_key
-        )
-    else:
-        st.warning(f"⚠️ 未找到日期数据，请先更新 data/{project}/total.json")
-        st.stop()  # 停止后续渲染
-
-    # 保证 selected_date_str 有值（以防 selectbox 返回空字符串）
-    if not selected_date_str and available_dates:
-        selected_date_str = available_dates[0]
+    # 获取所有有数据的日期集合
+    available_dates = set(df_all['日期'].dt.date)
+    
+    # 初始化 session state
+    date_key = f"date_input_{project}"
+    temp_date_key = f"temp_clicked_date_{project}"
+    
+    # 如果有临时点击的日期，应用它（在 widget 创建之前）
+    if temp_date_key in st.session_state:
+        st.session_state[date_key] = st.session_state[temp_date_key]
+        del st.session_state[temp_date_key]
+        st.rerun()  # 立即重新运行以应用新日期
+    
+    if date_key not in st.session_state:
+        st.session_state[date_key] = latest_date
+    
+    # 使用日历选择器，不限制年月范围
+    selected_date = st.date_input(
+        "📅 请选择日期",
+        min_value=None,  # 不限制最小日期
+        max_value=None,  # 不限制最大日期
+        key=date_key,
+        format="YYYY-MM-DD"
+    )
+    
+    # 验证选中的日期是否有数据
+    if selected_date not in available_dates:
+        # 找到最接近的有效日期
+        available_dates_list = sorted(available_dates)
+        closest_date = min(available_dates_list, key=lambda d: abs((d - selected_date).days))
+        
+        st.warning(f"⚠️ {selected_date} 暂无数据，显示最近的有效日期 {closest_date}")
+        selected_date = closest_date
+    
+    # 构造选中日期字符串
+    selected_date_str = selected_date.strftime('%Y-%m-%d')
 
     # 获取选中日期的数据行
     selected_row = df_all[df_all['日期'].dt.strftime('%Y-%m-%d') == selected_date_str].iloc[0]
 
     # 获取最新数据行（用于顶部大指标）
     latest_row = df_all.iloc[-1]
-
+    
+    # 显示可用数据范围提示
     st.info(f"当前显示: {selected_date_str}")
     st.caption("数据来源: 北京住建委")
 
@@ -573,8 +593,11 @@ with col_detail:
         # 当天无成交：在卡片内显示空状态并在卡片下方（视觉上为卡片内）放置跳转按钮
         if not valid_prices_df.empty:
             latest_valid_date_str = valid_prices_df.iloc[-1]['日期'].strftime('%Y-%m-%d')
+            latest_valid_date = valid_prices_df.iloc[-1]['日期'].date()
+            
             def _goto_latest():
-                st.session_state[selected_date_key] = latest_valid_date_str
+                # 设置日期选择器的值
+                st.session_state[f"date_input_{project}"] = latest_valid_date
 
             card_html = textwrap.dedent(f"""
 <div class="detail-card">
@@ -829,7 +852,8 @@ with col_chart:
         mode='lines+markers', name='累计均价', legendgroup='累计均价',
         line=dict(width=3, color=COLOR_PRIMARY, shape='spline'),
         marker=dict(size=6, color='white', line=dict(width=2, color=COLOR_PRIMARY)),
-        hovertemplate="累计均价: ¥%{y:,.2f}<extra></extra>"
+        hovertemplate="¥%{y:,.2f}<br>日期: %{x|%Y-%m-%d}",
+        customdata=x  # 存储日期数据用于点击事件
     ))
 
     # 当日均价线 - 橙黄色（置于渐变之上）
@@ -839,7 +863,8 @@ with col_chart:
         line=dict(width=3, color=COLOR_SECONDARY, shape='spline'),
         marker=dict(size=6, color='white', line=dict(width=2, color=COLOR_SECONDARY)),
         connectgaps=True,
-        hovertemplate="当日均价: ¥%{y:,.2f}<extra></extra>"
+        hovertemplate="¥%{y:,.2f}<br>日期: %{x|%Y-%m-%d}",
+        customdata=x  # 存储日期数据用于点击事件
     ))
 
     # 选中日期的高亮圈
@@ -898,28 +923,93 @@ with col_chart:
         )
     )
 
-    # 嵌入图表到与成交明细一致的卡片中（使用内联样式以便在 iframe 中正确显示）
-    fig_html = fig.to_html(full_html=False, include_plotlyjs='cdn')
-    # 包一层容器并加上小的 CSS reset，确保没有 body margin 导致溢出
-    wrapped_fig = textwrap.dedent(f"""
-<style>html,body{{margin:0;padding:0;background:transparent;}} .modebar, .plotly .modebar, .js-plotly-plot .modebar{{display:none !important;}} </style>
-<div style="background: white; border-radius: 14px; padding: 1rem; box-shadow: 0 8px 30px rgba(15,23,42,0.06); border: 1px solid transparent; margin-bottom: 1rem; height: 580px; box-sizing: border-box; position: relative; overflow: hidden;">
-  <div style="position:absolute; top:0; left:0; width:100%; height:6px; background: linear-gradient(90deg, #f28e52 0%, #ffb380 100%); border-top-left-radius:14px; border-top-right-radius:14px;"></div>
-  <div style="display:flex; align-items:center; height:56px; padding-left:6px;">
-    <div style="font-size:1.1rem; font-weight:800; color:#0f172a;">价格趋势</div>
-  </div>
-  <!-- 与成交明细一致的浅色分隔线 -->
-  <div style="border-bottom:1px solid #f1f5f9; margin: 0 8px 12px 8px; border-radius:4px;"></div>
-  <div style="height: calc(100% - 56px); overflow:visible; padding-right:6px; padding-left:6px; padding-bottom:96px;">
-    <div style="width:100%; height:100%; box-sizing:border-box;">
-{fig_html}
-    </div>
-  </div>
-</div>
-""").strip()
+    # 创建图表卡片容器（使用 st.container + CSS 实现完美卡片效果）
+    st.markdown("""
+    <style>
+    /* 为价格趋势图表容器添加卡片样式 */
+    div[data-testid="stVerticalBlock"]:has(#price_chart_anchor) {
+        background-color: white !important;
+        border-radius: 14px !important;
+        padding: 1rem !important;
+        box-shadow: 0 8px 30px rgba(15,23,42,0.06) !important;
+        border: 1px solid transparent !important;
+        margin-bottom: 1rem !important;
+        position: relative !important;
+        min-height: 580px !important;
+        box-sizing: border-box !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+    /* 橙色渐变顶部条 */
+    div[data-testid="stVerticalBlock"]:has(#price_chart_anchor)::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 6px;
+        background: linear-gradient(90deg, #f28e52 0%, #ffb380 100%);
+        border-top-left-radius: 14px;
+        border-top-right-radius: 14px;
+        z-index: 1;
+    }
 
-    # 禁用 components 的 iframe 滚动，让 iframe 尺寸由 height 决定（我们已微调图高度）
-    components.html(wrapped_fig, height=580, scrolling=False)
+    /* 响应式：窄屏时调整高度 */
+    @media (max-width: 768px) {
+        div[data-testid="stVerticalBlock"]:has(#price_chart_anchor) {
+            min-height: auto !important;
+            height: auto !important;
+        }
+    }
+    </style>
+    """, unsafe_allow_html=True)
+    
+    # 使用 st.container 包裹内容，以便 CSS 能够定位到这个容器
+    # 插入锚点，确保只匹配本图表对应的容器
+    st.markdown('<div id="price_chart_anchor" style="display:none;"></div>', unsafe_allow_html=True)
+    
+    # 标题
+    st.markdown("""
+    <div style="padding-top: 8px; margin-bottom: 12px;">
+        <div style="font-size: 1.1rem; font-weight: 800; color: #0f172a; margin-bottom: 8px;">
+            价格趋势（点击数据点可跳转到该日期）
+        </div>
+        <div style="border-bottom: 1px solid #f1f5f9;"></div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # 使用 plotly_chart 并启用点击事件
+    # 调整图表高度以适应卡片
+    fig.update_layout(height=480)
+    
+    selected_points = st.plotly_chart(
+        fig, 
+        use_container_width=True, 
+        key=f"price_chart_{project}",
+        on_select="rerun",
+        selection_mode="points"
+    )
+
+    # 处理点击事件
+    if selected_points and selected_points.selection and selected_points.selection.points:
+        point = selected_points.selection.points[0]
+        clicked_date = point.get('x') or point.get('point_index')
+        
+        from datetime import datetime
+        try:
+            if isinstance(clicked_date, str):
+                clicked_date = datetime.strptime(clicked_date.split("T")[0], "%Y-%m-%d").date()
+            elif isinstance(clicked_date, int):
+                clicked_date = df_all.iloc[clicked_date]['日期'].date()
+            elif hasattr(clicked_date, 'date'):
+                clicked_date = clicked_date.date()
+            
+            # 存储到临时变量
+            st.session_state[f"temp_clicked_date_{project}"] = clicked_date
+            st.rerun()
+        except Exception as e:
+            pass
+    
     
 # ==========================================
 # 6. 页脚
