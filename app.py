@@ -1012,7 +1012,88 @@ with col_chart:
     
     
 # ==========================================
-# 6. 页脚
+# 6. 全部成交表格卡片（显示所有成交信息）
+# ==========================================
+st.markdown('<br>', unsafe_allow_html=True)
+with st.expander("查看全部成交明细表", expanded=False):
+    # 构造所有成交明细表
+    records = []
+    for idx, row in df_all.iterrows():
+        date_val = row.get('日期')
+        date_str = date_val.strftime('%Y-%m-%d') if not pd.isna(date_val) else ''
+        price = row.get('均价(￥/M2)')  # 优先使用当日均价
+
+        house_list = row.get('成交户号', []) if row.get('成交户号') else []
+        if isinstance(house_list, list) and len(house_list) > 0:
+            for h in house_list:
+                b = h.get('building_name','')
+                no = h.get('house_no','')
+                area = h.get('area', None)
+                try:
+                    area_f = float(area) if area not in (None, '', 'null') else None
+                except Exception:
+                    area_f = None
+
+                if price and not pd.isna(price) and area_f:
+                    total = area_f * price
+                else:
+                    total = row.get('总价(￥)') if row.get('总价(￥)') not in (None, '', 'null') else None
+
+                records.append({
+                    '日期': date_str,
+                    '楼栋': b,
+                    '房号': no,
+                    '建筑面积(㎡)': area_f if area_f is not None else None,
+                    '单价(￥/M2)': price if not pd.isna(price) else None,
+                    '总价(￥)': total
+                })
+        else:
+            # 无具体户号时，如存在面积或总价则合成一条记录
+            area_val = row.get('面积(M2)')
+            total_val = row.get('总价(￥)')
+            if (area_val is not None and not pd.isna(area_val) and str(area_val) != "") or (total_val is not None and not pd.isna(total_val) and str(total_val) != ""):
+                try:
+                    area_f = float(area_val) if area_val not in (None, '', 'null') else None
+                except Exception:
+                    area_f = None
+                if price and not pd.isna(price) and area_f:
+                    total = area_f * price
+                else:
+                    try:
+                        total = float(total_val) if total_val not in (None, '', 'null') else None
+                    except Exception:
+                        total = None
+                records.append({
+                    '日期': date_str,
+                    '楼栋': '',
+                    '房号': '无户号',
+                    '建筑面积(㎡)': area_f,
+                    '单价(￥/M2)': price if not pd.isna(price) else None,
+                    '总价(￥)': total
+                })
+
+    df_tx = pd.DataFrame(records)
+    if df_tx.empty:
+        st.info("当前没有任何可显示的成交条目。")
+    else:
+        # 格式化展示列
+        df_display = df_tx.copy()
+        if '建筑面积(㎡)' in df_display.columns:
+            df_display['建筑面积(㎡)'] = df_display['建筑面积(㎡)'].apply(lambda x: f"{x:.2f}" if pd.notna(x) else '')
+        if '单价(￥/M2)' in df_display.columns:
+            df_display['单价(￥/M2)'] = df_display['单价(￥/M2)'].apply(lambda x: f"¥{x:,.2f}" if pd.notna(x) else '')
+        if '总价(￥)' in df_display.columns:
+            df_display['总价(￥)'] = df_display['总价(￥)'].apply(lambda x: f"¥{x:,.2f}" if pd.notna(x) else '')
+
+        st.dataframe(df_display.sort_values(['日期','楼栋','房号'], ascending=[False, True, True]), use_container_width=True)
+
+        # 导出 CSV
+        csv = df_tx.to_csv(index=False, encoding='utf-8-sig')
+        st.download_button("⬇️ 导出成交表 (CSV)", csv, file_name=f"{project}_all_transactions.csv", mime='text/csv')
+
+
+# ==========================================
+# 7. 页脚
 # ==========================================
 st.markdown("---")
 st.markdown(
