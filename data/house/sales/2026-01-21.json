@@ -1,7 +1,31 @@
 {
-  "5-12#住宅楼": {
-    "building_name": "5-12#住宅楼",
+  "5-1#住宅楼": {
+    "building_name": "5-1#住宅楼",
     "house_data": [
+      {
+        "house_no": "1单元-801",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-802",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-801",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-802",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-801",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-802",
+        "status": "可售"
+      },
       {
         "house_no": "1单元-701",
         "status": "可售"
@@ -27,16 +51,8 @@
         "status": "可售"
       },
       {
-        "house_no": "4单元-701",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-702",
-        "status": "可售"
-      },
-      {
         "house_no": "1单元-601",
-        "status": "网上联机备案"
+        "status": "可售"
       },
       {
         "house_no": "1单元-602",
@@ -44,7 +60,7 @@
       },
       {
         "house_no": "2单元-601",
-        "status": "网上联机备案"
+        "status": "可售"
       },
       {
         "house_no": "2单元-602",
@@ -52,18 +68,10 @@
       },
       {
         "house_no": "3单元-601",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "3单元-602",
         "status": "可售"
       },
       {
-        "house_no": "4单元-601",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "4单元-602",
+        "house_no": "3单元-602",
         "status": "可售"
       },
       {
@@ -72,30 +80,22 @@
       },
       {
         "house_no": "1单元-502",
-        "status": "网上联机备案"
+        "status": "可售"
       },
       {
         "house_no": "2单元-501",
-        "status": "网上联机备案"
+        "status": "可售"
       },
       {
         "house_no": "2单元-502",
-        "status": "网上联机备案"
+        "status": "可售"
       },
       {
         "house_no": "3单元-501",
-        "status": "网上联机备案"
+        "status": "可售"
       },
       {
         "house_no": "3单元-502",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "4单元-501",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "4单元-502",
         "status": "可售"
       },
       {
@@ -112,7 +112,7 @@
       },
       {
         "house_no": "2单元-402",
-        "status": "网上联机备案"
+        "status": "可售"
       },
       {
         "house_no": "3单元-401",
@@ -120,14 +120,6 @@
       },
       {
         "house_no": "3单元-402",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-401",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "4单元-402",
         "status": "可售"
       },
       {
@@ -140,7 +132,7 @@
       },
       {
         "house_no": "2单元-301",
-        "status": "网上联机备案"
+        "status": "可售"
       },
       {
         "house_no": "2单元-302",
@@ -148,18 +140,10 @@
       },
       {
         "house_no": "3单元-301",
-        "status": "网上联机备案"
+        "status": "可售"
       },
       {
         "house_no": "3单元-302",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "4单元-301",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "4单元-302",
         "status": "可售"
       },
       {
@@ -172,7 +156,7 @@
       },
       {
         "house_no": "2单元-201",
-        "status": "网上联机备案"
+        "status": "可售"
       },
       {
         "house_no": "2单元-202",
@@ -184,14 +168,6 @@
       },
       {
         "house_no": "3单元-202",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-201",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-202",
         "status": "可售"
       },
       {
@@ -216,20 +192,11 @@
       },
       {
         "house_no": "3单元-102",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "4单元-101",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-102",
         "status": "可售"
       }
     ],
     "status_count": {
-      "可售": 38,
-      "网上联机备案": 18
+      "可售": 48
     }
   },
   "5-11#住宅楼": {
@@ -496,6 +463,504 @@
       "可售": 26,
       "网上联机备案": 37,
       "已签约": 1
+    }
+  },
+  "5-12#住宅楼": {
+    "building_name": "5-12#住宅楼",
+    "house_data": [
+      {
+        "house_no": "1单元-701",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-702",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-701",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-702",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-701",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-702",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-701",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-702",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-601",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "1单元-602",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-601",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "2单元-602",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-601",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "3单元-602",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-601",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "4单元-602",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-501",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-502",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "2单元-501",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "2单元-502",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "3单元-501",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "3单元-502",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "4单元-501",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "4单元-502",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-401",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-402",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-401",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-402",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "3单元-401",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-402",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-401",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "4单元-402",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-301",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-302",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-301",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "2单元-302",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-301",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "3单元-302",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "4单元-301",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "4单元-302",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-201",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-202",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-201",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "2单元-202",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-201",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-202",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-201",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-202",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-101",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-102",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-101",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-102",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-101",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-102",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "4单元-101",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-102",
+        "status": "可售"
+      }
+    ],
+    "status_count": {
+      "可售": 38,
+      "网上联机备案": 18
+    }
+  },
+  "5-10#住宅楼": {
+    "building_name": "5-10#住宅楼",
+    "house_data": [
+      {
+        "house_no": "1单元-801",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "1单元-802",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "2单元-801",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "2单元-802",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "3单元-801",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "3单元-802",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "4单元-801",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "4单元-802",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "1单元-701",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "1单元-702",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-701",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-702",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-701",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-702",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-701",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-702",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-601",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-602",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "2单元-601",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "2单元-602",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "3单元-601",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "3单元-602",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-601",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "4单元-602",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "1单元-501",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "1单元-502",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "2单元-501",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "2单元-502",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "3单元-501",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "3单元-502",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "4单元-501",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "4单元-502",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "1单元-401",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "1单元-402",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "2单元-401",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "2单元-402",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "3单元-401",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "3单元-402",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-401",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "4单元-402",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "1单元-301",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "1单元-302",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "2单元-301",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "2单元-302",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "3单元-301",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "3单元-302",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "4单元-301",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "4单元-302",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "1单元-201",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "1单元-202",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-201",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-202",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-201",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-202",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-201",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-202",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "1单元-101",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-102",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-101",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-102",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-101",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "3单元-102",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-101",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "4单元-102",
+        "status": "网上联机备案"
+      }
+    ],
+    "status_count": {
+      "网上联机备案": 43,
+      "可售": 21
     }
   },
   "5-14#住宅楼": {
@@ -1004,8 +1469,8 @@
       "可售": 43
     }
   },
-  "5-1#住宅楼": {
-    "building_name": "5-1#住宅楼",
+  "5-17#住宅楼": {
+    "building_name": "5-17#住宅楼",
     "house_data": [
       {
         "house_no": "1单元-801",
@@ -1016,48 +1481,16 @@
         "status": "可售"
       },
       {
-        "house_no": "2单元-801",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-802",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-801",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-802",
-        "status": "可售"
-      },
-      {
         "house_no": "1单元-701",
-        "status": "可售"
+        "status": "网上联机备案"
       },
       {
         "house_no": "1单元-702",
         "status": "可售"
       },
       {
-        "house_no": "2单元-701",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-702",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-701",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-702",
-        "status": "可售"
-      },
-      {
         "house_no": "1单元-601",
-        "status": "可售"
+        "status": "网上联机备案"
       },
       {
         "house_no": "1单元-602",
@@ -1080,12 +1513,20 @@
         "status": "可售"
       },
       {
-        "house_no": "1单元-501",
+        "house_no": "4单元-601",
         "status": "可售"
       },
       {
-        "house_no": "1单元-502",
+        "house_no": "4单元-602",
         "status": "可售"
+      },
+      {
+        "house_no": "1单元-501",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "1单元-502",
+        "status": "网上联机备案"
       },
       {
         "house_no": "2单元-501",
@@ -1093,15 +1534,23 @@
       },
       {
         "house_no": "2单元-502",
-        "status": "可售"
+        "status": "网上联机备案"
       },
       {
         "house_no": "3单元-501",
-        "status": "可售"
+        "status": "网上联机备案"
       },
       {
         "house_no": "3单元-502",
         "status": "可售"
+      },
+      {
+        "house_no": "4单元-501",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "4单元-502",
+        "status": "网上联机备案"
       },
       {
         "house_no": "1单元-401",
@@ -1128,8 +1577,16 @@
         "status": "可售"
       },
       {
-        "house_no": "1单元-301",
+        "house_no": "4单元-401",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "4单元-402",
         "status": "可售"
+      },
+      {
+        "house_no": "1单元-301",
+        "status": "网上联机备案"
       },
       {
         "house_no": "1单元-302",
@@ -1141,14 +1598,22 @@
       },
       {
         "house_no": "2单元-302",
-        "status": "可售"
+        "status": "网上联机备案"
       },
       {
         "house_no": "3单元-301",
-        "status": "可售"
+        "status": "网上联机备案"
       },
       {
         "house_no": "3单元-302",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-301",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "4单元-302",
         "status": "可售"
       },
       {
@@ -1161,7 +1626,7 @@
       },
       {
         "house_no": "2单元-201",
-        "status": "可售"
+        "status": "网上联机备案"
       },
       {
         "house_no": "2单元-202",
@@ -1173,6 +1638,14 @@
       },
       {
         "house_no": "3单元-202",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-201",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "4单元-202",
         "status": "可售"
       },
       {
@@ -1189,19 +1662,28 @@
       },
       {
         "house_no": "2单元-102",
-        "status": "可售"
+        "status": "网上联机备案"
       },
       {
         "house_no": "3单元-101",
-        "status": "可售"
+        "status": "网上联机备案"
       },
       {
         "house_no": "3单元-102",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "4单元-101",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "4单元-102",
         "status": "可售"
       }
     ],
     "status_count": {
-      "可售": 48
+      "可售": 33,
+      "网上联机备案": 19
     }
   },
   "5-15#住宅楼": {
@@ -1684,6 +2166,440 @@
       "可售": 64
     }
   },
+  "5-16#住宅楼": {
+    "building_name": "5-16#住宅楼",
+    "house_data": [
+      {
+        "house_no": "1单元-801",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-802",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-701",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "1单元-702",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-601",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "1单元-602",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-601",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-602",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-601",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-602",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-501",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-502",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "2单元-501",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "2单元-502",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "3单元-501",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "3单元-502",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-401",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-402",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-401",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "2单元-402",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "3单元-401",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "3单元-402",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-301",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "1单元-302",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-301",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "2单元-302",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-301",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-302",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "1单元-201",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-202",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-201",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "2单元-202",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-201",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-202",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-101",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-102",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-101",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-102",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-101",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-102",
+        "status": "可售"
+      }
+    ],
+    "status_count": {
+      "可售": 27,
+      "网上联机备案": 13
+    }
+  },
+  "5-7#住宅楼": {
+    "building_name": "5-7#住宅楼",
+    "house_data": [
+      {
+        "house_no": "1单元-801",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "1单元-802",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "2单元-801",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "2单元-802",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "3单元-801",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "3单元-802",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "4单元-801",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "4单元-802",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "1单元-701",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-702",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-701",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-702",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-701",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-702",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-701",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-702",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-601",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-602",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-601",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-602",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-601",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-602",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-601",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-602",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-501",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-502",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-501",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-502",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-501",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-502",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-501",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-502",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-401",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-402",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-401",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-402",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-401",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-402",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-401",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-402",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-301",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-302",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-301",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-302",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-301",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-302",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-301",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-302",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-201",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-202",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-201",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-202",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-201",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-202",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-201",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-202",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-101",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-102",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-101",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-102",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-101",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-102",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-101",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-102",
+        "status": "可售"
+      }
+    ],
+    "status_count": {
+      "网上联机备案": 8,
+      "可售": 56
+    }
+  },
   "5-2#住宅楼": {
     "building_name": "5-2#住宅楼",
     "house_data": [
@@ -2148,1234 +3064,6 @@
       "可售": 64
     }
   },
-  "5-6#住宅楼": {
-    "building_name": "5-6#住宅楼",
-    "house_data": [
-      {
-        "house_no": "1单元-801",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-802",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-801",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-802",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-801",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-802",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-801",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-802",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-701",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-702",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-701",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-702",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-701",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-702",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-701",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-702",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-601",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-602",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-601",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-602",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-601",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-602",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-601",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-602",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-501",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-502",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-501",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-502",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-501",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-502",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-501",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-502",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-401",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-402",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-401",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-402",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-401",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-402",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-401",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-402",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-301",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-302",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-301",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-302",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-301",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-302",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-301",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-302",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-201",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-202",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-201",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-202",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-201",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-202",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-201",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-202",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-101",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-102",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-101",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-102",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-101",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-102",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-101",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-102",
-        "status": "可售"
-      }
-    ],
-    "status_count": {
-      "可售": 64
-    }
-  },
-  "5-7#住宅楼": {
-    "building_name": "5-7#住宅楼",
-    "house_data": [
-      {
-        "house_no": "1单元-801",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "1单元-802",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "2单元-801",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "2单元-802",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "3单元-801",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "3单元-802",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "4单元-801",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "4单元-802",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "1单元-701",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-702",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-701",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-702",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-701",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-702",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-701",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-702",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-601",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-602",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-601",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-602",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-601",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-602",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-601",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-602",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-501",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-502",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-501",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-502",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-501",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-502",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-501",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-502",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-401",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-402",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-401",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-402",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-401",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-402",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-401",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-402",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-301",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-302",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-301",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-302",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-301",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-302",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-301",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-302",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-201",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-202",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-201",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-202",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-201",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-202",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-201",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-202",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-101",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-102",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-101",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-102",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-101",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-102",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-101",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-102",
-        "status": "可售"
-      }
-    ],
-    "status_count": {
-      "网上联机备案": 8,
-      "可售": 56
-    }
-  },
-  "5-10#住宅楼": {
-    "building_name": "5-10#住宅楼",
-    "house_data": [
-      {
-        "house_no": "1单元-801",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "1单元-802",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "2单元-801",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "2单元-802",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "3单元-801",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "3单元-802",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "4单元-801",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "4单元-802",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "1单元-701",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "1单元-702",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-701",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-702",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-701",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-702",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-701",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-702",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-601",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-602",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "2单元-601",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "2单元-602",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "3单元-601",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "3单元-602",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-601",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "4单元-602",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "1单元-501",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "1单元-502",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "2单元-501",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "2单元-502",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "3单元-501",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "3单元-502",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "4单元-501",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "4单元-502",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "1单元-401",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "1单元-402",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "2单元-401",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "2单元-402",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "3单元-401",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "3单元-402",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-401",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "4单元-402",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "1单元-301",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "1单元-302",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "2单元-301",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "2单元-302",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "3单元-301",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "3单元-302",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "4单元-301",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "4单元-302",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "1单元-201",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "1单元-202",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-201",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-202",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-201",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-202",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-201",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-202",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "1单元-101",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-102",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-101",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-102",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-101",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "3单元-102",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-101",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "4单元-102",
-        "status": "网上联机备案"
-      }
-    ],
-    "status_count": {
-      "网上联机备案": 43,
-      "可售": 21
-    }
-  },
-  "5-16#住宅楼": {
-    "building_name": "5-16#住宅楼",
-    "house_data": [
-      {
-        "house_no": "1单元-801",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-802",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-701",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "1单元-702",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-601",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "1单元-602",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-601",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-602",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-601",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-602",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-501",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-502",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "2单元-501",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "2单元-502",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "3单元-501",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "3单元-502",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-401",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-402",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-401",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "2单元-402",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "3单元-401",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "3单元-402",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-301",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "1单元-302",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-301",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "2单元-302",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-301",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-302",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "1单元-201",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-202",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-201",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "2单元-202",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-201",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-202",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-101",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-102",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-101",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-102",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-101",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-102",
-        "status": "可售"
-      }
-    ],
-    "status_count": {
-      "可售": 27,
-      "网上联机备案": 13
-    }
-  },
-  "5-9#住宅楼": {
-    "building_name": "5-9#住宅楼",
-    "house_data": [
-      {
-        "house_no": "1单元-801",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "1单元-802",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-801",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-802",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-801",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-802",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-801",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-802",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-701",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-702",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-701",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "2单元-702",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-701",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-702",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-701",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-702",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-601",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "1单元-602",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-601",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "2单元-602",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "3单元-601",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-602",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "4单元-601",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-602",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "1单元-501",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-502",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "2单元-501",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "2单元-502",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "3单元-501",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "3单元-502",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "4单元-501",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-502",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-401",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-402",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-401",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "2单元-402",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-401",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-402",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-401",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-402",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-301",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-302",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-301",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-302",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-301",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "3单元-302",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-301",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-302",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-201",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-202",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-201",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-202",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-201",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-202",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-201",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-202",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-101",
-        "status": "可售"
-      },
-      {
-        "house_no": "1单元-102",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-101",
-        "status": "可售"
-      },
-      {
-        "house_no": "2单元-102",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-101",
-        "status": "可售"
-      },
-      {
-        "house_no": "3单元-102",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-101",
-        "status": "可售"
-      },
-      {
-        "house_no": "4单元-102",
-        "status": "可售"
-      }
-    ],
-    "status_count": {
-      "网上联机备案": 14,
-      "可售": 50
-    }
-  },
   "5-8#住宅楼": {
     "building_name": "5-8#住宅楼",
     "house_data": [
@@ -3641,8 +3329,8 @@
       "可售": 42
     }
   },
-  "5-17#住宅楼": {
-    "building_name": "5-17#住宅楼",
+  "5-6#住宅楼": {
+    "building_name": "5-6#住宅楼",
     "house_data": [
       {
         "house_no": "1单元-801",
@@ -3653,16 +3341,64 @@
         "status": "可售"
       },
       {
+        "house_no": "2单元-801",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-802",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-801",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-802",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-801",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-802",
+        "status": "可售"
+      },
+      {
         "house_no": "1单元-701",
-        "status": "网上联机备案"
+        "status": "可售"
       },
       {
         "house_no": "1单元-702",
         "status": "可售"
       },
       {
+        "house_no": "2单元-701",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-702",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-701",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-702",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-701",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-702",
+        "status": "可售"
+      },
+      {
         "house_no": "1单元-601",
-        "status": "网上联机备案"
+        "status": "可售"
       },
       {
         "house_no": "1单元-602",
@@ -3694,11 +3430,11 @@
       },
       {
         "house_no": "1单元-501",
-        "status": "网上联机备案"
+        "status": "可售"
       },
       {
         "house_no": "1单元-502",
-        "status": "网上联机备案"
+        "status": "可售"
       },
       {
         "house_no": "2单元-501",
@@ -3706,11 +3442,11 @@
       },
       {
         "house_no": "2单元-502",
-        "status": "网上联机备案"
+        "status": "可售"
       },
       {
         "house_no": "3单元-501",
-        "status": "网上联机备案"
+        "status": "可售"
       },
       {
         "house_no": "3单元-502",
@@ -3718,11 +3454,11 @@
       },
       {
         "house_no": "4单元-501",
-        "status": "网上联机备案"
+        "status": "可售"
       },
       {
         "house_no": "4单元-502",
-        "status": "网上联机备案"
+        "status": "可售"
       },
       {
         "house_no": "1单元-401",
@@ -3750,7 +3486,7 @@
       },
       {
         "house_no": "4单元-401",
-        "status": "网上联机备案"
+        "status": "可售"
       },
       {
         "house_no": "4单元-402",
@@ -3758,7 +3494,7 @@
       },
       {
         "house_no": "1单元-301",
-        "status": "网上联机备案"
+        "status": "可售"
       },
       {
         "house_no": "1单元-302",
@@ -3770,11 +3506,11 @@
       },
       {
         "house_no": "2单元-302",
-        "status": "网上联机备案"
+        "status": "可售"
       },
       {
         "house_no": "3单元-301",
-        "status": "网上联机备案"
+        "status": "可售"
       },
       {
         "house_no": "3单元-302",
@@ -3782,7 +3518,7 @@
       },
       {
         "house_no": "4单元-301",
-        "status": "网上联机备案"
+        "status": "可售"
       },
       {
         "house_no": "4单元-302",
@@ -3798,7 +3534,7 @@
       },
       {
         "house_no": "2单元-201",
-        "status": "网上联机备案"
+        "status": "可售"
       },
       {
         "house_no": "2单元-202",
@@ -3814,7 +3550,7 @@
       },
       {
         "house_no": "4单元-201",
-        "status": "网上联机备案"
+        "status": "可售"
       },
       {
         "house_no": "4单元-202",
@@ -3834,19 +3570,19 @@
       },
       {
         "house_no": "2单元-102",
-        "status": "网上联机备案"
+        "status": "可售"
       },
       {
         "house_no": "3单元-101",
-        "status": "网上联机备案"
+        "status": "可售"
       },
       {
         "house_no": "3单元-102",
-        "status": "网上联机备案"
+        "status": "可售"
       },
       {
         "house_no": "4单元-101",
-        "status": "网上联机备案"
+        "status": "可售"
       },
       {
         "house_no": "4单元-102",
@@ -3854,8 +3590,272 @@
       }
     ],
     "status_count": {
-      "可售": 33,
-      "网上联机备案": 19
+      "可售": 64
+    }
+  },
+  "5-9#住宅楼": {
+    "building_name": "5-9#住宅楼",
+    "house_data": [
+      {
+        "house_no": "1单元-801",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "1单元-802",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-801",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-802",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-801",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-802",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-801",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-802",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-701",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-702",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-701",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "2单元-702",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-701",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-702",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-701",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-702",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-601",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "1单元-602",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-601",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "2单元-602",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "3单元-601",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-602",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "4单元-601",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-602",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "1单元-501",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-502",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "2单元-501",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "2单元-502",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "3单元-501",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "3单元-502",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "4单元-501",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-502",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-401",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-402",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-401",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "2单元-402",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-401",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-402",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-401",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-402",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-301",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-302",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-301",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-302",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-301",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "3单元-302",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-301",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-302",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-201",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-202",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-201",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-202",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-201",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-202",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-201",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-202",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-101",
+        "status": "可售"
+      },
+      {
+        "house_no": "1单元-102",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-101",
+        "status": "可售"
+      },
+      {
+        "house_no": "2单元-102",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-101",
+        "status": "可售"
+      },
+      {
+        "house_no": "3单元-102",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-101",
+        "status": "可售"
+      },
+      {
+        "house_no": "4单元-102",
+        "status": "可售"
+      }
+    ],
+    "status_count": {
+      "网上联机备案": 14,
+      "可售": 50
     }
   }
 }
