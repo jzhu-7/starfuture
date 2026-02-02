@@ -38,6 +38,9 @@ jobs:
       - name: Run update for warehouse
         run: python -m core.main data warehouse
 
+      - name: Run update for parking
+        run: python -m core.main data parking
+
       - name: Debug git status and staged changes
         run: |
           git status --porcelain

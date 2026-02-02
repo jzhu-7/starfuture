@@ -401,21 +401,25 @@ with st.sidebar:
     st.image("https://cdn-icons-png.flaticon.com/512/25/25694.png", width=50)
     st.header("控制面板")
 
-    # 项目选择（住宅 / 仓储）
-    project_map = {"住宅": "house", "仓储": "warehouse"}
+    # 项目选择（住宅 / 仓储 / 车位）
+    project_map = {"住宅": "house", "仓储": "warehouse", "车位": "parking"}
     default_proj = os.environ.get('PROJECT_TYPE', 'house')
-    default_label = '住宅' if default_proj == 'house' else '仓储'
+    # 根据环境变量找出对应的显示标签（若未命中则默认为“住宅”）
+    default_label = next((k for k, v in project_map.items() if v == default_proj), '住宅')
 
     def _on_project_change():
         st.cache_data.clear()
         # 不直接修改与 selectbox 对应的 session_state（修改后可能导致 Streamlit 错误）
-        # 我们使用基于项目的 selectbox key（例如 selected_date_house / selected_date_warehouse）来避免冲突
+        # 我们使用基于项目的 selectbox key（例如 selected_date_house / selected_date_warehouse / selected_date_parking）来避免冲突
         # 仅清理缓存，组件会在下一次交互时依据当前项目自动显示正确的选项
+
+    labels = list(project_map.keys())
+    default_index = labels.index(default_label) if default_label in labels else 0
 
     selected_label = st.radio(
         "🔁 切换数据视角",
-        options=list(project_map.keys()),
-        index=0 if default_label == '住宅' else 1,
+        options=labels,
+        index=default_index,
         key='project_label',
         horizontal=True,
         on_change=_on_project_change

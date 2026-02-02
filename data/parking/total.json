@@ -1,0 +1,198 @@
+[
+    {
+        "日期": "2026-02-02",
+        "已签约套数": 31,
+        "已签约面积(M2)": 429.69,
+        "成交均价(￥/M2)": 8852.61,
+        "成交户号": [
+            {
+                "building_name": "5-地下车库",
+                "house_no": "-1149",
+                "area": 13.75
+            },
+            {
+                "building_name": "5-地下车库",
+                "house_no": "-1150",
+                "area": 13.75
+            },
+            {
+                "building_name": "5-地下车库",
+                "house_no": "-1151",
+                "area": 13.75
+            },
+            {
+                "building_name": "5-地下车库",
+                "house_no": "-1152",
+                "area": 13.75
+            },
+            {
+                "building_name": "5-地下车库",
+                "house_no": "-1154",
+                "area": 13.75
+            },
+            {
+                "building_name": "5-地下车库",
+                "house_no": "-1158",
+                "area": 13.75
+            },
+            {
+                "building_name": "5-地下车库",
+                "house_no": "-1160",
+                "area": 13.75
+            },
+            {
+                "building_name": "5-地下车库",
+                "house_no": "-1164",
+                "area": 13.75
+            },
+            {
+                "building_name": "5-地下车库",
+                "house_no": "-1167",
+                "area": 13.75
+            },
+            {
+                "building_name": "5-地下车库",
+                "house_no": "-1177",
+                "area": 13.75
+            },
+            {
+                "building_name": "5-地下车库",
+                "house_no": "-1182",
+                "area": 13.75
+            },
+            {
+                "building_name": "5-地下车库",
+                "house_no": "-1183",
+                "area": 13.75
+            },
+            {
+                "building_name": "5-地下车库",
+                "house_no": "-1202",
+                "area": 13.75
+            },
+            {
+                "building_name": "5-地下车库",
+                "house_no": "-1211",
+                "area": 13.75
+            },
+            {
+                "building_name": "5-地下车库",
+                "house_no": "-1215",
+                "area": 13.75
+            },
+            {
+                "building_name": "5-地下车库",
+                "house_no": "-1216",
+                "area": 13.75
+            },
+            {
+                "building_name": "5-地下车库",
+                "house_no": "-1218",
+                "area": 13.75
+            },
+            {
+                "building_name": "5-地下车库",
+                "house_no": "-1293",
+                "area": 13.75
+            },
+            {
+                "building_name": "5-地下车库",
+                "house_no": "-1295",
+                "area": 13.75
+            },
+            {
+                "building_name": "5-地下车库",
+                "house_no": "-1308",
+                "area": 13.75
+            },
+            {
+                "building_name": "5-地下车库",
+                "house_no": "-1312",
+                "area": 13.75
+            },
+            {
+                "building_name": "5-地下车库",
+                "house_no": "-1316",
+                "area": 13.75
+            },
+            {
+                "building_name": "5-地下车库",
+                "house_no": "-1317",
+                "area": 13.75
+            },
+            {
+                "building_name": "5-地下车库",
+                "house_no": "-1328",
+                "area": 13.75
+            },
+            {
+                "building_name": "5-地下车库",
+                "house_no": "-1330",
+                "area": 13.75
+            },
+            {
+                "building_name": "5-地下车库",
+                "house_no": "-1340",
+                "area": 13.75
+            },
+            {
+                "building_name": "5-地下车库",
+                "house_no": "-1345",
+                "area": 13.75
+            },
+            {
+                "building_name": "5-地下车库",
+                "house_no": "-1360",
+                "area": 13.75
+            },
+            {
+                "building_name": "5-地下车库",
+                "house_no": "-1369",
+                "area": 13.75
+            },
+            {
+                "building_name": "5-地下车库",
+                "house_no": "-1370",
+                "area": 13.75
+            },
+            {
+                "building_name": "5-地下车库",
+                "house_no": "-1371",
+                "area": 13.75
+            },
+            {
+                "building_name": "5-地下车库",
+                "house_no": "-1396",
+                "area": 13.75
+            },
+            {
+                "building_name": "5-地下车库",
+                "house_no": "-1399",
+                "area": 13.75
+            },
+            {
+                "building_name": "5-地下车库",
+                "house_no": "-1429",
+                "area": 13.75
+            },
+            {
+                "building_name": "5-地下车库",
+                "house_no": "-1454",
+                "area": 13.75
+            }
+        ],
+        "面积(M2)": 429.69,
+        "总价(￥)": 3803877.99,
+        "均价(￥/M2)": 8852.61
+    },
+    {
+        "日期": "2026-01-25",
+        "已签约套数": 0,
+        "已签约面积(M2)": 0,
+        "成交均价(￥/M2)": 0,
+        "成交户号": [],
+        "面积(M2)": "",
+        "总价(￥)": "",
+        "均价(￥/M2)": ""
+    }
+]

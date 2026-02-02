@@ -50,9 +50,7 @@ def find_base_record(data_by_date: Dict[str, Dict], today: str) -> Optional[Dict
 
     return None
 
-
-def parse_presale_contract_stats(html: str) -> Optional[SalesStats]:
-    """解析期房签约统计数据"""
+def parse_presale_contract_stats(html: str, project: str) -> Optional[SalesStats]:
     soup = BeautifulSoup(html, "html.parser")
 
     title_td = soup.find(
@@ -62,19 +60,47 @@ def parse_presale_contract_stats(html: str) -> Optional[SalesStats]:
         return None
 
     outer_table = title_td.find_parent("table")
-    data_table = outer_table.find_all("table")[0]
+    if not outer_table:
+        return None
+
+    data_table = outer_table.find("table")
+    if not data_table:
+        return None
 
     rows = data_table.find_all("tr")
+    if len(rows) < 2:
+        return None
+
     headers = [td.get_text(strip=True) for td in rows[0].find_all("td")]
-    values = [td.get_text(strip=True) for td in rows[1].find_all("td")]
-    data = dict(zip(headers, values))
 
-    return SalesStats(
-        signed_units=int(data.get("已签约套数", 0)),
-        signed_area=float(data.get("已签约面积(M2)", "0")),
-        avg_price=float(data.get("成交均价(￥/M2)", "0")),
-    )
+    project_map = {
+        "warehouse": "戊类库房",
+        "parking": "车位",
+        "house": "住宅",
+    }
 
+    target_usage = project_map.get(project)
+    if not target_usage:
+        return None
+
+    for row in rows[1:]:
+        tds = row.find_all("td")
+        if len(tds) != len(headers):
+            continue
+
+        values = [td.get_text(strip=True) for td in tds]
+        data = dict(zip(headers, values))
+
+        if data.get("用 途") != target_usage:
+            continue
+
+        return SalesStats(
+            signed_units=int(data["已签约套数"]),
+            signed_area=float(data["已签约面积(M2)"]),
+            avg_price=float(data["成交均价(￥/M2)"]),
+        )
+
+    return None
 
 def build_house_area_map(project: str) -> Dict[str, Dict[str, float]]:
     """构建房源面积映射（按项目）"""
@@ -156,7 +182,7 @@ def update_sales_data(project: str = "house") -> bool:
         resp.raise_for_status()
         resp.encoding = "utf-8"
 
-        stats = parse_presale_contract_stats(resp.text)
+        stats = parse_presale_contract_stats(resp.text, project)
         if not stats:
             logger.error("❌ 未获取期房签约统计")
             return False

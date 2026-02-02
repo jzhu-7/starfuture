@@ -25,7 +25,7 @@ def fetch_html(url: str, timeout: int = REQUEST_TIMEOUT) -> str:
 
 def get_buildings_url(project: str = 'house') -> Dict[str, str]:
     """获取楼栋URL映射（按项目）
-    project: 'house' 或 'warehouse'
+    project: 'house' 或 'warehouse' 或 'parking'
     """
     cfg = get_project_config(project)
     target_url = cfg.get('TARGET_URL')
@@ -35,6 +35,10 @@ def get_buildings_url(project: str = 'house') -> Dict[str, str]:
     soup = BeautifulSoup(html, "html.parser")
 
     buildings = {}
+    if project == 'warehouse' or project == 'house':
+        na = f"住宅楼"
+    elif project == 'parking':
+        na = f"地下车库"
 
     for a in soup.find_all("a", href=True):
         href = a["href"]
@@ -45,7 +49,7 @@ def get_buildings_url(project: str = 'house') -> Dict[str, str]:
             "pageId=320833" in href
             and "buildingId=" in href
             and "salePermitId=" in href
-            and name.endswith("住宅楼")
+            and name.endswith(na)
         ):
             full_url = urljoin(base_url, href)
             full_url = full_url.replace("https://", "http://", 1)

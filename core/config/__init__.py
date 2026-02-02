@@ -24,6 +24,14 @@ PROJECTS = {
             "pageId=411612&systemId=2&srcId=1&id=8083301&rowcount=18"
         ),
         "DATA_URL": "http://bjjs.zjw.beijing.gov.cn/eportal/ui?pageId=320794&projectID=8083301&systemID=2&srcId=1",
+    },
+    "parking": {
+        "BASE_URL": "https://bjjs.zjw.beijing.gov.cn",
+        "TARGET_URL": (
+            "http://bjjs.zjw.beijing.gov.cn/eportal/ui?"
+            "pageId=411612&systemId=2&srcId=1&id=8083301&rowcount=18"
+        ),
+        "DATA_URL": "http://bjjs.zjw.beijing.gov.cn/eportal/ui?pageId=320794&projectID=8083301&systemID=2&srcId=1",
     }
 }
 
