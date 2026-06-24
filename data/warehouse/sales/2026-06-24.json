@@ -1,198 +1,4 @@
 {
-  "5-1#住宅楼": {
-    "building_name": "5-1#住宅楼",
-    "house_data": [
-      {
-        "house_no": "-101",
-        "status": "可售"
-      },
-      {
-        "house_no": "-102",
-        "status": "可售"
-      },
-      {
-        "house_no": "-103",
-        "status": "可售"
-      },
-      {
-        "house_no": "-104",
-        "status": "可售"
-      },
-      {
-        "house_no": "-105",
-        "status": "可售"
-      }
-    ],
-    "status_count": {
-      "可售": 5
-    }
-  },
-  "5-10#住宅楼": {
-    "building_name": "5-10#住宅楼",
-    "house_data": [
-      {
-        "house_no": "-101",
-        "status": "可售"
-      },
-      {
-        "house_no": "-102",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-103",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-104",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-105",
-        "status": "可售"
-      },
-      {
-        "house_no": "-106",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-107",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-108",
-        "status": "可售"
-      },
-      {
-        "house_no": "-109",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-110",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-111",
-        "status": "可售"
-      },
-      {
-        "house_no": "-112",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-113",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-114",
-        "status": "可售"
-      }
-    ],
-    "status_count": {
-      "可售": 5,
-      "网上联机备案": 9
-    }
-  },
-  "5-13#住宅楼": {
-    "building_name": "5-13#住宅楼",
-    "house_data": [
-      {
-        "house_no": "-101",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-102",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-103",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-104",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-105",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-106",
-        "status": "可售"
-      },
-      {
-        "house_no": "-107",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-108",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-109",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-110",
-        "status": "可售"
-      },
-      {
-        "house_no": "-111",
-        "status": "可售"
-      },
-      {
-        "house_no": "-112",
-        "status": "可售"
-      },
-      {
-        "house_no": "-113",
-        "status": "可售"
-      },
-      {
-        "house_no": "-114",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-115",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-116",
-        "status": "可售"
-      },
-      {
-        "house_no": "-117",
-        "status": "可售"
-      },
-      {
-        "house_no": "-118",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-119",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-120",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-121",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-122",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-123",
-        "status": "网上联机备案"
-      }
-    ],
-    "status_count": {
-      "网上联机备案": 16,
-      "可售": 7
-    }
-  },
   "5-12#住宅楼": {
     "building_name": "5-12#住宅楼",
     "house_data": [
@@ -760,6 +566,34 @@
       "可售": 9
     }
   },
+  "5-1#住宅楼": {
+    "building_name": "5-1#住宅楼",
+    "house_data": [
+      {
+        "house_no": "-101",
+        "status": "可售"
+      },
+      {
+        "house_no": "-102",
+        "status": "可售"
+      },
+      {
+        "house_no": "-103",
+        "status": "可售"
+      },
+      {
+        "house_no": "-104",
+        "status": "可售"
+      },
+      {
+        "house_no": "-105",
+        "status": "可售"
+      }
+    ],
+    "status_count": {
+      "可售": 5
+    }
+  },
   "5-17#住宅楼": {
     "building_name": "5-17#住宅楼",
     "house_data": [
@@ -828,6 +662,34 @@
       "网上联机备案": 11,
       "可售": 3,
       "已签约": 1
+    }
+  },
+  "5-2#住宅楼": {
+    "building_name": "5-2#住宅楼",
+    "house_data": [
+      {
+        "house_no": "-101",
+        "status": "可售"
+      },
+      {
+        "house_no": "-102",
+        "status": "可售"
+      },
+      {
+        "house_no": "-103",
+        "status": "可售"
+      },
+      {
+        "house_no": "-104",
+        "status": "可售"
+      },
+      {
+        "house_no": "-105",
+        "status": "可售"
+      }
+    ],
+    "status_count": {
+      "可售": 5
     }
   },
   "5-16#住宅楼": {
@@ -936,8 +798,8 @@
       "已签约": 1
     }
   },
-  "5-2#住宅楼": {
-    "building_name": "5-2#住宅楼",
+  "5-5#住宅楼": {
+    "building_name": "5-5#住宅楼",
     "house_data": [
       {
         "house_no": "-101",
@@ -949,7 +811,7 @@
       },
       {
         "house_no": "-103",
-        "status": "可售"
+        "status": "网上联机备案"
       },
       {
         "house_no": "-104",
@@ -958,10 +820,88 @@
       {
         "house_no": "-105",
         "status": "可售"
+      },
+      {
+        "house_no": "-106",
+        "status": "可售"
+      },
+      {
+        "house_no": "-107",
+        "status": "可售"
+      },
+      {
+        "house_no": "-108",
+        "status": "可售"
+      },
+      {
+        "house_no": "-109",
+        "status": "可售"
+      },
+      {
+        "house_no": "-110",
+        "status": "可售"
+      },
+      {
+        "house_no": "-111",
+        "status": "可售"
+      },
+      {
+        "house_no": "-112",
+        "status": "可售"
+      },
+      {
+        "house_no": "-113",
+        "status": "可售"
+      },
+      {
+        "house_no": "-114",
+        "status": "可售"
+      },
+      {
+        "house_no": "-115",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-116",
+        "status": "可售"
+      },
+      {
+        "house_no": "-117",
+        "status": "已签约"
+      },
+      {
+        "house_no": "-118",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-119",
+        "status": "可售"
+      },
+      {
+        "house_no": "-120",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-121",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-122",
+        "status": "可售"
+      },
+      {
+        "house_no": "-123",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-124",
+        "status": "网上联机备案"
       }
     ],
     "status_count": {
-      "可售": 5
+      "可售": 16,
+      "网上联机备案": 7,
+      "已签约": 1
     }
   },
   "5-4#住宅楼": {
@@ -994,6 +934,318 @@
     ],
     "status_count": {
       "可售": 6
+    }
+  },
+  "5-13#住宅楼": {
+    "building_name": "5-13#住宅楼",
+    "house_data": [
+      {
+        "house_no": "-101",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-102",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-103",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-104",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-105",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-106",
+        "status": "可售"
+      },
+      {
+        "house_no": "-107",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-108",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-109",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-110",
+        "status": "可售"
+      },
+      {
+        "house_no": "-111",
+        "status": "可售"
+      },
+      {
+        "house_no": "-112",
+        "status": "可售"
+      },
+      {
+        "house_no": "-113",
+        "status": "可售"
+      },
+      {
+        "house_no": "-114",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-115",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-116",
+        "status": "可售"
+      },
+      {
+        "house_no": "-117",
+        "status": "可售"
+      },
+      {
+        "house_no": "-118",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-119",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-120",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-121",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-122",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-123",
+        "status": "网上联机备案"
+      }
+    ],
+    "status_count": {
+      "网上联机备案": 16,
+      "可售": 7
+    }
+  },
+  "5-10#住宅楼": {
+    "building_name": "5-10#住宅楼",
+    "house_data": [
+      {
+        "house_no": "-101",
+        "status": "可售"
+      },
+      {
+        "house_no": "-102",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-103",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-104",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-105",
+        "status": "可售"
+      },
+      {
+        "house_no": "-106",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-107",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-108",
+        "status": "可售"
+      },
+      {
+        "house_no": "-109",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-110",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-111",
+        "status": "可售"
+      },
+      {
+        "house_no": "-112",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-113",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-114",
+        "status": "可售"
+      }
+    ],
+    "status_count": {
+      "可售": 5,
+      "网上联机备案": 9
+    }
+  },
+  "5-7#住宅楼": {
+    "building_name": "5-7#住宅楼",
+    "house_data": [
+      {
+        "house_no": "-101",
+        "status": "可售"
+      },
+      {
+        "house_no": "-102",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-103",
+        "status": "可售"
+      },
+      {
+        "house_no": "-104",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-105",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-106",
+        "status": "可售"
+      },
+      {
+        "house_no": "-107",
+        "status": "可售"
+      },
+      {
+        "house_no": "-108",
+        "status": "可售"
+      },
+      {
+        "house_no": "-109",
+        "status": "网上联机备案"
+      }
+    ],
+    "status_count": {
+      "可售": 5,
+      "网上联机备案": 4
+    }
+  },
+  "5-8#住宅楼": {
+    "building_name": "5-8#住宅楼",
+    "house_data": [
+      {
+        "house_no": "-101",
+        "status": "可售"
+      },
+      {
+        "house_no": "-102",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-103",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-104",
+        "status": "可售"
+      },
+      {
+        "house_no": "-105",
+        "status": "可售"
+      },
+      {
+        "house_no": "-106",
+        "status": "可售"
+      },
+      {
+        "house_no": "-107",
+        "status": "可售"
+      },
+      {
+        "house_no": "-108",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-109",
+        "status": "可售"
+      },
+      {
+        "house_no": "-110",
+        "status": "可售"
+      },
+      {
+        "house_no": "-111",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-112",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-113",
+        "status": "可售"
+      },
+      {
+        "house_no": "-114",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-115",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-116",
+        "status": "可售"
+      },
+      {
+        "house_no": "-117",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-118",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-119",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-120",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-121",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-122",
+        "status": "网上联机备案"
+      },
+      {
+        "house_no": "-123",
+        "status": "网上联机备案"
+      }
+    ],
+    "status_count": {
+      "可售": 9,
+      "网上联机备案": 14
     }
   },
   "5-3#住宅楼": {
@@ -1220,112 +1472,6 @@
       "可售": 54
     }
   },
-  "5-5#住宅楼": {
-    "building_name": "5-5#住宅楼",
-    "house_data": [
-      {
-        "house_no": "-101",
-        "status": "可售"
-      },
-      {
-        "house_no": "-102",
-        "status": "可售"
-      },
-      {
-        "house_no": "-103",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-104",
-        "status": "可售"
-      },
-      {
-        "house_no": "-105",
-        "status": "可售"
-      },
-      {
-        "house_no": "-106",
-        "status": "可售"
-      },
-      {
-        "house_no": "-107",
-        "status": "可售"
-      },
-      {
-        "house_no": "-108",
-        "status": "可售"
-      },
-      {
-        "house_no": "-109",
-        "status": "可售"
-      },
-      {
-        "house_no": "-110",
-        "status": "可售"
-      },
-      {
-        "house_no": "-111",
-        "status": "可售"
-      },
-      {
-        "house_no": "-112",
-        "status": "可售"
-      },
-      {
-        "house_no": "-113",
-        "status": "可售"
-      },
-      {
-        "house_no": "-114",
-        "status": "可售"
-      },
-      {
-        "house_no": "-115",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-116",
-        "status": "可售"
-      },
-      {
-        "house_no": "-117",
-        "status": "已签约"
-      },
-      {
-        "house_no": "-118",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-119",
-        "status": "可售"
-      },
-      {
-        "house_no": "-120",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-121",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-122",
-        "status": "可售"
-      },
-      {
-        "house_no": "-123",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-124",
-        "status": "网上联机备案"
-      }
-    ],
-    "status_count": {
-      "可售": 16,
-      "网上联机备案": 7,
-      "已签约": 1
-    }
-  },
   "5-6#住宅楼": {
     "building_name": "5-6#住宅楼",
     "house_data": [
@@ -1420,152 +1566,6 @@
     ],
     "status_count": {
       "可售": 22
-    }
-  },
-  "5-7#住宅楼": {
-    "building_name": "5-7#住宅楼",
-    "house_data": [
-      {
-        "house_no": "-101",
-        "status": "可售"
-      },
-      {
-        "house_no": "-102",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-103",
-        "status": "可售"
-      },
-      {
-        "house_no": "-104",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-105",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-106",
-        "status": "可售"
-      },
-      {
-        "house_no": "-107",
-        "status": "可售"
-      },
-      {
-        "house_no": "-108",
-        "status": "可售"
-      },
-      {
-        "house_no": "-109",
-        "status": "网上联机备案"
-      }
-    ],
-    "status_count": {
-      "可售": 5,
-      "网上联机备案": 4
-    }
-  },
-  "5-8#住宅楼": {
-    "building_name": "5-8#住宅楼",
-    "house_data": [
-      {
-        "house_no": "-101",
-        "status": "可售"
-      },
-      {
-        "house_no": "-102",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-103",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-104",
-        "status": "可售"
-      },
-      {
-        "house_no": "-105",
-        "status": "可售"
-      },
-      {
-        "house_no": "-106",
-        "status": "可售"
-      },
-      {
-        "house_no": "-107",
-        "status": "可售"
-      },
-      {
-        "house_no": "-108",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-109",
-        "status": "可售"
-      },
-      {
-        "house_no": "-110",
-        "status": "可售"
-      },
-      {
-        "house_no": "-111",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-112",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-113",
-        "status": "可售"
-      },
-      {
-        "house_no": "-114",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-115",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-116",
-        "status": "可售"
-      },
-      {
-        "house_no": "-117",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-118",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-119",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-120",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-121",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-122",
-        "status": "网上联机备案"
-      },
-      {
-        "house_no": "-123",
-        "status": "网上联机备案"
-      }
-    ],
-    "status_count": {
-      "可售": 9,
-      "网上联机备案": 14
     }
   },
   "5-9#住宅楼": {
