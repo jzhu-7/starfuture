@@ -2579,14 +2579,14 @@
         "成交均价(￥/M2)": 642.28,
         "成交户号": [
             {
-                "building_name": "5-1#住宅楼",
-                "house_no": "-102",
-                "area": 64.85
-            },
-            {
                 "building_name": "5-13#住宅楼",
                 "house_no": "-117",
                 "area": 16.61
+            },
+            {
+                "building_name": "5-1#住宅楼",
+                "house_no": "-102",
+                "area": 64.85
             },
             {
                 "building_name": "5-5#住宅楼",
@@ -2599,14 +2599,14 @@
                 "area": 17.06
             },
             {
-                "building_name": "5-9#住宅楼",
-                "house_no": "-116",
-                "area": 15.13
-            },
-            {
                 "building_name": "5-6#住宅楼",
                 "house_no": "-121",
                 "area": 22.29
+            },
+            {
+                "building_name": "5-9#住宅楼",
+                "house_no": "-116",
+                "area": 15.13
             }
         ],
         "面积(M2)": 174.15,
